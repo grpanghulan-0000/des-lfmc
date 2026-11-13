@@ -1,0 +1,2002 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Orientation (LabSafe) | DES LFM - UPLB MatE Laboratory Portal</title>
+    <meta name="description" content="Official 7-part interactive Laboratory Safety Induction and 50-question certification assessment for the UPLB Materials Engineering Laboratory.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        up: {
+                            maroon: '#7B1113',
+                            maroonDark: '#5A0C0E',
+                            maroonLight: '#FDF2F2',
+                            green: '#014421',
+                            gold: '#F3AA20'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #F8FAFC;
+            color: #0F172A;
+        }
+        .bg-grid-pattern {
+            background-image: radial-gradient(rgba(15, 23, 42, 0.06) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .certificate-bg {
+            background: #ffffff;
+            border: 16px double #1e293b;
+            position: relative;
+        }
+        .hazard-zone:hover {
+            fill: rgba(239, 68, 68, 0.2);
+            cursor: pointer;
+        }
+        .step-active {
+            border-color: #7B1113 !important;
+            background-color: #FDF2F2 !important;
+        }
+
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+        }
+
+        /* Subtle animations for interactive simulation */
+        .pulse-soft {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        .pulse-highlight {
+            animation: pulse-border 1.5s infinite;
+            transform-origin: center;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        @keyframes pulse-border {
+            0% { filter: drop-shadow(0 0 2px #3b82f6) drop-shadow(0 0 5px #3b82f6); }
+            50% { filter: drop-shadow(0 0 8px #60a5fa) drop-shadow(0 0 15px #60a5fa); }
+            100% { filter: drop-shadow(0 0 2px #3b82f6) drop-shadow(0 0 5px #3b82f6); }
+        }
+
+        .sample-label {
+            background-image: repeating-linear-gradient(0deg, transparent, transparent 23px, #e2e8f0 23px, #e2e8f0 24px);
+            background-position: 0 1.5rem;
+        }
+
+        /* SVG Drag interactions */
+        .draggable { cursor: grab; }
+        .draggable:active { cursor: grabbing; }
+        #sim-svg { touch-action: none; }
+
+        /* NFPA Diamond Hover FX */
+        .nfpa-segment {
+            transition: all 0.25s ease;
+            cursor: pointer;
+        }
+        .nfpa-segment:hover {
+            filter: brightness(1.12) drop-shadow(0 0 6px rgba(0,0,0,0.25));
+            transform: scale(1.02);
+            transform-origin: center;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen antialiased selection:bg-up-maroon selection:text-white">
+
+    <!-- Top Institutional Bar -->
+    <div class="bg-slate-900 text-slate-300 text-xs py-2 border-b border-slate-800 no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+                <span class="inline-block w-2 h-2 rounded-full bg-up-maroon"></span>
+                <span class="font-medium text-white">UPLB CEAT</span>
+                <span class="text-slate-600">|</span>
+                <span>Department of Engineering Science — Laboratory Facilities Management (DES LFM)</span>
+            </div>
+            <div class="hidden sm:flex items-center gap-4 text-slate-400">
+                <a href="index.html#emergency" class="hover:text-white transition-colors flex items-center gap-1.5">
+                    <i data-lucide="phone" class="w-3.5 h-3.5 text-red-400"></i>
+                    Emergency Contacts
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Unified Sticky Navigation -->
+    <header class="bg-white/90 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-50 no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="h-16 flex items-center justify-between gap-4">
+                
+                <!-- Brand Logo -->
+                <a href="index.html" class="flex items-center gap-3 group shrink-0">
+                    <div class="w-10 h-10 rounded-xl bg-up-maroon flex items-center justify-center text-white shadow-sm group-hover:bg-up-maroonDark transition-colors">
+                        <i data-lucide="flask-conical" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <div class="font-display font-bold text-base tracking-tight text-slate-900 leading-none">
+                            DES <span class="text-up-maroon">LFM</span>
+                        </div>
+                        <div class="text-[11px] text-slate-500 font-medium mt-0.5">
+                            MatE Laboratory Portal
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden lg:flex items-center gap-1 text-sm font-medium text-slate-600">
+                    <a href="index.html" class="px-3 py-2 rounded-lg hover:text-slate-900 hover:bg-slate-100/70 transition-colors">
+                        Home
+                    </a>
+                    <a href="user-manual.html" class="px-3 py-2 rounded-lg hover:text-slate-900 hover:bg-slate-100/70 transition-colors">
+                        User Manual
+                    </a>
+                    <a href="safety-webinars.html" class="px-3 py-2 rounded-lg hover:text-slate-900 hover:bg-slate-100/70 transition-colors">
+                        Safety Webinars
+                    </a>
+                    <a href="lab-orientation.html" class="px-3 py-2 rounded-lg text-up-maroon bg-red-50/70 font-semibold">
+                        Lab Orientation
+                    </a>
+
+                    <!-- Online Forms Dropdown -->
+                    <div class="relative group">
+                        <button class="px-3 py-2 rounded-lg hover:text-slate-900 hover:bg-slate-100/70 transition-colors flex items-center gap-1">
+                            Online Forms
+                            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-hover:rotate-180 transition-transform duration-200"></i>
+                        </button>
+                        <div class="absolute left-0 mt-1 w-56 bg-white rounded-xl shadow-lg border border-slate-200/80 py-1.5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-50">
+                            <a href="lab-request-form.html" class="flex items-center gap-2.5 px-4 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50 hover:text-up-maroon">
+                                <i data-lucide="door-open" class="w-4 h-4 text-slate-400"></i>
+                                Form 1: Lab Request Form
+                            </a>
+                            <a href="glassware-request.html" class="flex items-center gap-2.5 px-4 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50 hover:text-up-maroon">
+                                <i data-lucide="beaker" class="w-4 h-4 text-slate-400"></i>
+                                Form 2: Glassware Request
+                            </a>
+                            <a href="chemical-request.html" class="flex items-center gap-2.5 px-4 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50 hover:text-up-maroon">
+                                <i data-lucide="flask-conical" class="w-4 h-4 text-slate-400"></i>
+                                Form 3: Chemical Request
+                            </a>
+                            <a href="off-hours-permit.html" class="flex items-center gap-2.5 px-4 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50 hover:text-up-maroon">
+                                <i data-lucide="clock" class="w-4 h-4 text-slate-400"></i>
+                                Form 4: Off-Hours Permit
+                            </a>
+                        </div>
+                    </div>
+
+                    <a href="lfmc-memos.html" class="px-3 py-2 rounded-lg hover:text-slate-900 hover:bg-slate-100/70 transition-colors">
+                        LFMC Memos
+                    </a>
+                    <a href="technician-access.html" class="px-3 py-2 rounded-lg hover:text-slate-900 hover:bg-slate-100/70 transition-colors">
+                        Technician Access
+                    </a>
+
+                    <!-- Calendar Dropdown -->
+                    <div class="relative group">
+                        <button class="px-3 py-2 rounded-lg hover:text-slate-900 hover:bg-slate-100/70 transition-colors flex items-center gap-1">
+                            Calendar
+                            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-hover:rotate-180 transition-transform duration-200"></i>
+                        </button>
+                        <div class="absolute right-0 mt-1 w-44 bg-white rounded-xl shadow-lg border border-slate-200/80 py-1.5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-50">
+                            <a href="calendar-b104.html" class="flex items-center justify-between px-4 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50 hover:text-up-maroon">
+                                <span>Room B104</span>
+                                <i data-lucide="calendar" class="w-3.5 h-3.5 text-slate-400"></i>
+                            </a>
+                            <a href="calendar-b106.html" class="flex items-center justify-between px-4 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50 hover:text-up-maroon">
+                                <span>Room B106</span>
+                                <i data-lucide="calendar" class="w-3.5 h-3.5 text-slate-400"></i>
+                            </a>
+                            <a href="calendar-b108.html" class="flex items-center justify-between px-4 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50 hover:text-up-maroon">
+                                <span>Room B108</span>
+                                <i data-lucide="calendar" class="w-3.5 h-3.5 text-slate-400"></i>
+                            </a>
+                        </div>
+                    </div>
+                </nav>
+
+                <!-- Onboarding Progress Pill (Visible during active training) -->
+                <div class="hidden sm:flex items-center gap-3 shrink-0">
+                    <div id="progress-ui" class="hidden items-center gap-3 bg-slate-50 border border-slate-200/90 px-3.5 py-1.5 rounded-xl">
+                        <div class="flex flex-col items-end">
+                            <span id="progress-text" class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Induction Progress</span>
+                            <div class="w-28 bg-slate-200 h-1.5 rounded-full mt-1 overflow-hidden">
+                                <div id="app-progress" class="bg-up-maroon h-full transition-all duration-500" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <span id="progress-pct" class="text-xs font-extrabold text-up-maroon min-w-[2.25rem] text-right">0%</span>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Trigger -->
+                <button id="mobile-menu-btn" type="button" aria-label="Open navigation menu" class="lg:hidden p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-6 space-y-3">
+            <div class="grid grid-cols-1 gap-1 text-sm font-medium text-slate-700">
+                <a href="index.html" class="px-3 py-2 rounded-lg hover:bg-slate-50">Home</a>
+                <a href="user-manual.html" class="px-3 py-2 rounded-lg hover:bg-slate-50">User Manual</a>
+                <a href="safety-webinars.html" class="px-3 py-2 rounded-lg hover:bg-slate-50">Safety Webinars</a>
+                <a href="lab-orientation.html" class="px-3 py-2 rounded-lg bg-red-50 text-up-maroon font-semibold">Lab Orientation</a>
+                <a href="lfmc-memos.html" class="px-3 py-2 rounded-lg hover:bg-slate-50">LFMC Memos</a>
+                <a href="technician-access.html" class="px-3 py-2 rounded-lg hover:bg-slate-50">Technician Access</a>
+            </div>
+
+            <div class="pt-2 border-t border-slate-100">
+                <p class="px-3 text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-1">Online Forms</p>
+                <div class="grid grid-cols-2 gap-1 text-xs font-medium text-slate-600">
+                    <a href="lab-request-form.html" class="px-3 py-2 rounded-lg hover:bg-slate-50">Form 1: Lab Request</a>
+                    <a href="glassware-request.html" class="px-3 py-2 rounded-lg hover:bg-slate-50">Form 2: Glassware</a>
+                    <a href="chemical-request.html" class="px-3 py-2 rounded-lg hover:bg-slate-50">Form 3: Reagents</a>
+                    <a href="off-hours-permit.html" class="px-3 py-2 rounded-lg hover:bg-slate-50">Form 4: Off-Hours</a>
+                </div>
+            </div>
+
+            <div class="pt-2 border-t border-slate-100">
+                <p class="px-3 text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-1">Room Calendars</p>
+                <div class="flex gap-2 px-3 pt-1">
+                    <a href="calendar-b104.html" class="flex-1 text-center py-1.5 rounded-lg bg-slate-100 text-xs font-semibold text-slate-700 hover:bg-slate-200">B104</a>
+                    <a href="calendar-b106.html" class="flex-1 text-center py-1.5 rounded-lg bg-slate-100 text-xs font-semibold text-slate-700 hover:bg-slate-200">B106</a>
+                    <a href="calendar-b108.html" class="flex-1 text-center py-1.5 rounded-lg bg-slate-100 text-xs font-semibold text-slate-700 hover:bg-slate-200">B108</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="app-container" class="flex-grow max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+
+        <!-- ===================================================================
+             SCREEN 1: WELCOME & PHILOSOPHY
+             =================================================================== -->
+        <section id="screen-welcome" class="onboarding-screen space-y-6">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200/90 overflow-hidden">
+                
+                <!-- Modern Clean Hero Header -->
+                <div class="bg-grid-pattern border-b border-slate-200/80 p-8 md:p-12">
+                    <div class="max-w-3xl space-y-4">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 border border-red-200/60 text-up-maroon text-xs font-semibold">
+                            <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+                            2026 Official Manual · Mandatory Onboarding
+                        </div>
+                        <h1 class="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                            Laboratory <span class="text-up-maroon">Safety Induction</span>
+                        </h1>
+                        <p class="text-slate-600 text-base sm:text-lg leading-relaxed">
+                            <strong class="font-semibold text-slate-800">"People First, Environment Second, Property Third."</strong> — The core philosophy of the UPLB Materials Engineering safety response.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Body Content -->
+                <div class="p-8 md:p-12 grid lg:grid-cols-12 gap-10">
+                    <div class="lg:col-span-8 space-y-8">
+                        
+                        <!-- Prudent Person Principle -->
+                        <div class="space-y-2.5">
+                            <h2 class="font-display text-xl font-bold text-slate-900 flex items-center gap-2.5">
+                                <div class="w-8 h-8 rounded-lg bg-red-50 text-up-maroon flex items-center justify-center border border-red-100">
+                                    <i data-lucide="scale" class="w-4 h-4"></i>
+                                </div>
+                                The "Prudent Person" Principle
+                            </h2>
+                            <p class="text-slate-600 text-sm leading-relaxed">
+                                As outlined in <strong>Section 3.1</strong>: If a specific hazard is not covered in the manual, you are expected to act in a careful and sensible manner.
+                                <span class="bg-amber-50 text-amber-900 border border-amber-200/60 px-2 py-0.5 font-semibold rounded-md inline-block mt-1 sm:mt-0">When in doubt, stop work and ask for guidance.</span>
+                            </p>
+                        </div>
+
+                        <!-- Rights & Responsibilities -->
+                        <div class="grid sm:grid-cols-2 gap-4 text-sm pt-2">
+                            <div class="bg-slate-50 p-5 rounded-xl border border-slate-200/80">
+                                <span class="font-display font-bold text-slate-900 mb-2 flex items-center gap-2">
+                                    <i data-lucide="book-open" class="w-4 h-4 text-blue-600"></i>
+                                    The Right to Know (Sec 1.5.1)
+                                </span>
+                                <p class="text-slate-600 text-xs leading-relaxed">
+                                    You have the right to access Safety Data Sheets (SDS) for all chemicals, operating manuals for heavy machinery, and emergency evacuation information.
+                                </p>
+                            </div>
+                            <div class="bg-slate-50 p-5 rounded-xl border border-slate-200/80">
+                                <span class="font-display font-bold text-slate-900 mb-2 flex items-center gap-2">
+                                    <i data-lucide="user-check" class="w-4 h-4 text-amber-600"></i>
+                                    Responsibilities (Sec 1.5.2)
+                                </span>
+                                <p class="text-slate-600 text-xs leading-relaxed">
+                                    Strict adherence to PPE, mandatory reporting of all incidents (Form 5), and environmental stewardship regarding chemical waste disposal.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- User Classification Selector -->
+                        <div class="bg-slate-50 p-6 rounded-xl border border-slate-200/90">
+                            <label for="user-group" class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-3">
+                                Select User Classification (Sec 1.2)
+                            </label>
+                            <div class="space-y-2">
+                                <select id="user-group" class="w-full p-3.5 rounded-xl border border-slate-300 focus:border-up-maroon focus:ring-2 focus:ring-up-maroon/10 outline-none font-semibold text-sm text-slate-800 bg-white shadow-sm">
+                                    <option value="Group A">Group A: MatE &amp; ENSC Lab Students</option>
+                                    <option value="Group B">Group B: DES Research Staff (REPS)</option>
+                                    <option value="Group C">Group C: CEAT Affiliated Students</option>
+                                    <option value="Group D">Group D: UP System External Users</option>
+                                    <option value="Group E">Group E: Non-UP / Industry Users</option>
+                                </select>
+                                <p class="text-xs text-slate-500">
+                                    Your classification dictates your access rights, exam validity, and required clearance forms.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Start CTA -->
+                        <div>
+                            <button onclick="startInduction()" class="w-full bg-up-maroon hover:bg-up-maroonDark text-white p-4 rounded-xl font-display font-bold transition-all flex items-center justify-center gap-2.5 shadow-sm text-base">
+                                <span>Begin 7-Part Safety Training</span>
+                                <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                            </button>
+                            <button id="dev-skip-btn" onclick="skipToCertificate()" class="hidden w-full mt-3 text-center text-xs text-slate-400 hover:text-slate-600 transition-colors cursor-pointer">
+                                [Dev: Skip to Certificate]
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Training Modules Roadmap -->
+                    <div class="lg:col-span-4 lg:border-l lg:border-slate-200/80 lg:pl-8 space-y-5">
+                        <div>
+                            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Curriculum Overview</h3>
+                            <p class="text-xs text-slate-500 mt-1">Complete all 7 modules to unlock the certification exam.</p>
+                        </div>
+                        <div class="space-y-3.5">
+                            <div class="flex items-start gap-3 p-2.5 rounded-xl bg-red-50/60 border border-red-100">
+                                <div class="w-6 h-6 rounded-lg bg-up-maroon text-white text-xs flex items-center justify-center font-bold shrink-0">1</div>
+                                <div>
+                                    <p class="text-xs font-bold text-slate-900">Dress Code &amp; PPE</p>
+                                    <p class="text-[11px] text-slate-500">Section 2.1 &amp; 3.2</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3 p-2.5 rounded-xl border border-slate-100">
+                                <div class="w-6 h-6 rounded-lg bg-slate-100 text-slate-600 text-xs flex items-center justify-center font-bold shrink-0">2</div>
+                                <div>
+                                    <p class="text-xs font-bold text-slate-800">Chemical Hygiene &amp; Waste</p>
+                                    <p class="text-[11px] text-slate-500">Section 2.3 &amp; 3.4</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3 p-2.5 rounded-xl border border-slate-100">
+                                <div class="w-6 h-6 rounded-lg bg-slate-100 text-slate-600 text-xs flex items-center justify-center font-bold shrink-0">3</div>
+                                <div>
+                                    <p class="text-xs font-bold text-slate-800">Hazard ID (GHS)</p>
+                                    <p class="text-[11px] text-slate-500">Global Pictograms</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3 p-2.5 rounded-xl border border-slate-100">
+                                <div class="w-6 h-6 rounded-lg bg-slate-100 text-slate-600 text-xs flex items-center justify-center font-bold shrink-0">4</div>
+                                <div>
+                                    <p class="text-xs font-bold text-slate-800">NFPA 704 Diamond</p>
+                                    <p class="text-[11px] text-slate-500">Hazard Rating System</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3 p-2.5 rounded-xl border border-slate-100">
+                                <div class="w-6 h-6 rounded-lg bg-slate-100 text-slate-600 text-xs flex items-center justify-center font-bold shrink-0">5</div>
+                                <div>
+                                    <p class="text-xs font-bold text-slate-800">Emergency Protocol</p>
+                                    <p class="text-[11px] text-slate-500">Section 5.1 – 5.5</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3 p-2.5 rounded-xl border border-slate-100">
+                                <div class="w-6 h-6 rounded-lg bg-slate-100 text-slate-600 text-xs flex items-center justify-center font-bold shrink-0">6</div>
+                                <div>
+                                    <p class="text-xs font-bold text-slate-800">Admin, Forms &amp; Penalties</p>
+                                    <p class="text-[11px] text-slate-500">Section 1.4 &amp; 4.3</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3 p-2.5 rounded-xl border border-slate-100">
+                                <div class="w-6 h-6 rounded-lg bg-slate-100 text-slate-600 text-xs flex items-center justify-center font-bold shrink-0">7</div>
+                                <div>
+                                    <p class="text-xs font-bold text-slate-800">Interactive Simulation &amp; Exam</p>
+                                    <p class="text-[11px] text-slate-500">50-Question Mandatory Assessment</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================
+             SCREEN 2: MODULE 1 - MANDATORY DRESS CODE & PPE
+             =================================================================== -->
+        <section id="screen-ppe" class="onboarding-screen hidden space-y-8">
+            <div class="bg-white p-6 rounded-2xl border border-slate-200/90 shadow-sm flex flex-wrap items-center justify-between gap-4">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-up-maroon block mb-0.5">Module 01 of 07</span>
+                    <h2 class="font-display text-2xl font-bold text-slate-900">Professional Standards &amp; PPE</h2>
+                    <p class="text-slate-500 text-xs mt-0.5">Section 2.1 (Before Entering) &amp; Section 3.2 (PPE Standards)</p>
+                </div>
+                <div class="flex items-center gap-1.5">
+                    <div class="w-6 h-2 bg-up-maroon rounded-full"></div>
+                    <div class="w-6 h-2 bg-slate-200 rounded-full"></div>
+                    <div class="w-6 h-2 bg-slate-200 rounded-full"></div>
+                    <div class="w-6 h-2 bg-slate-200 rounded-full"></div>
+                    <div class="w-6 h-2 bg-slate-200 rounded-full"></div>
+                    <div class="w-6 h-2 bg-slate-200 rounded-full"></div>
+                    <div class="w-6 h-2 bg-slate-200 rounded-full"></div>
+                </div>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-6">
+                <div class="space-y-6">
+                    <!-- Pre-Lab Readiness -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200/90 shadow-sm">
+                        <h3 class="font-display font-bold text-base mb-4 flex items-center gap-2 text-slate-900">
+                            <i data-lucide="log-in" class="w-5 h-5 text-blue-600"></i>
+                            Pre-Lab Readiness (Sec 2.1)
+                        </h3>
+                        <div class="space-y-3">
+                            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/70 text-xs text-slate-600 leading-relaxed">
+                                <strong class="text-slate-900 block mb-0.5">Pre-Lab Study</strong>
+                                Read procedures and prepare SDS of chemicals before arriving. Know the exact locations of the Fire Extinguisher, Eye Wash, and Safety Shower.
+                            </div>
+                            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/70 text-xs text-slate-600 leading-relaxed">
+                                <strong class="text-slate-900 block mb-0.5">Room Entry Logbook</strong>
+                                Mandatory time-in upon entering. Provide Full Name, Group Classification, Purpose, and exact Time-In.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mandatory Dress Code -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200/90 shadow-sm">
+                        <h3 class="font-display font-bold text-base mb-4 flex items-center gap-2 text-slate-900">
+                            <i data-lucide="shirt" class="w-5 h-5 text-up-maroon"></i>
+                            Mandatory Dress Code
+                        </h3>
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            <div class="p-4 rounded-xl bg-emerald-50/70 border border-emerald-200">
+                                <div class="flex items-center gap-2 mb-1.5">
+                                    <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i>
+                                    <p class="text-xs font-bold text-emerald-900">Allowed</p>
+                                </div>
+                                <p class="text-xs text-emerald-800 leading-relaxed">
+                                    Full-length pants (denim/twill), closed leather shoes, tied-back hair.
+                                </p>
+                            </div>
+                            <div class="p-4 rounded-xl bg-rose-50/70 border border-rose-200">
+                                <div class="flex items-center gap-2 mb-1.5">
+                                    <i data-lucide="x-circle" class="w-4 h-4 text-rose-600"></i>
+                                    <p class="text-xs font-bold text-rose-900">Prohibited</p>
+                                </div>
+                                <p class="text-xs text-rose-800 leading-relaxed">
+                                    Leggings, shorts, mesh sneakers, crocs, dangling jewelry.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PPE Verification -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200/90 shadow-sm">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-display font-bold text-base flex items-center gap-2 text-slate-900">
+                                <i data-lucide="shield-check" class="w-5 h-5 text-up-maroon"></i>
+                                PPE Verification
+                            </h3>
+                            <span id="ppe-counter" class="text-xs font-semibold text-up-maroon bg-red-50 px-2.5 py-0.5 rounded-full border border-red-100">
+                                0 / 4 Reviewed
+                            </span>
+                        </div>
+                        <p class="text-xs text-slate-500 mb-4">Click each required item below to review its technical standards and unlock the next module.</p>
+                        <div id="ppe-list" class="grid gap-2.5"></div>
+                    </div>
+                </div>
+
+                <!-- Right Detail Panel -->
+                <div class="bg-slate-900 rounded-2xl p-8 shadow-sm flex flex-col justify-between text-white border border-slate-800">
+                    <div>
+                        <span class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-red-400 bg-white/5 border border-white/10 px-3 py-1 rounded-full mb-6">
+                            Technical Specification
+                        </span>
+                        <div id="ppe-icon-box" class="w-14 h-14 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center text-white mb-6">
+                            <i data-lucide="shield-alert" class="w-7 h-7"></i>
+                        </div>
+                        <h3 id="ppe-title" class="font-display text-2xl sm:text-3xl font-bold mb-3 text-white">
+                            Laboratory Readiness
+                        </h3>
+                        <p id="ppe-desc" class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                            Select each of the 4 PPE protocols on the left to review the technical standards required for MatE Lab access.
+                        </p>
+                    </div>
+
+                    <div id="ppe-extra" class="pt-6 mt-8 border-t border-slate-800">
+                        <div class="flex gap-4 items-start bg-red-950/60 p-4 rounded-xl border border-red-500/30">
+                            <div class="mt-0.5 text-red-400 shrink-0">
+                                <i data-lucide="eye" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold text-white">"Eyes Don't Grow Back"</p>
+                                <p class="text-xs text-slate-300 mt-1 leading-relaxed">
+                                    Missing eye protection is grounds for immediate dismissal (Sec 3.1). ANSI Z87.1+ is the required impact standard.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center pt-2">
+                <button onclick="navTo('screen-welcome')" class="text-slate-500 hover:text-slate-900 text-sm font-semibold flex items-center gap-2 px-4 py-2.5 rounded-xl hover:bg-white transition-colors">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Back
+                </button>
+                <button id="btn-next-ppe" disabled onclick="updateProgress(25); navTo('screen-hygiene')" class="bg-slate-200 text-slate-400 px-7 py-3.5 rounded-xl font-display font-bold text-sm cursor-not-allowed transition-all">
+                    Review all 4 PPE items to continue
+                </button>
+            </div>
+        </section>
+
+        <!-- ===================================================================
+             SCREEN 3: MODULE 2 - TECHNICAL HYGIENE, WASTE & HOUSEKEEPING
+             =================================================================== -->
+        <section id="screen-hygiene" class="onboarding-screen hidden space-y-8">
+            <div class="bg-white p-6 rounded-2xl border border-slate-200/90 shadow-sm flex flex-wrap items-center justify-between gap-4">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-up-maroon block mb-0.5">Module 02 of 07</span>
+                    <h2 class="font-display text-2xl font-bold text-slate-900">Technical Hygiene &amp; Waste Segregation</h2>
+                    <p class="text-slate-500 text-xs mt-0.5">Section 2.3 (Housekeeping), 3.3 (Hygiene) &amp; 3.4 (Waste)</p>
+                </div>
+                <div class="flex items-center gap-1.5">
+                    <div class="w-6 h-2 bg-up-maroon rounded-full"></div>
+                    <div class="w-6 h-2 bg-up-maroon rounded-full"></div>
+                    <div class="w-6 h-2 bg-slate-200 rounded-full"></div>
+                    <div class="w-6 h-2 bg-slate-200 rounded-full"></div>
+                    <div class="w-6 h-2 bg-slate-200 rounded-full"></div>
+                    <div class="w-6 h-2 bg-slate-200 rounded-full"></div>
+                    <div class="w-6 h-2 bg-slate-200 rounded-full"></div>
+                </div>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-6">
+                <div class="space-y-6">
+                    <!-- Fume Hoods -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200/90 shadow-sm">
+                        <h3 class="font-display font-bold text-base mb-4 flex items-center gap-2 text-slate-900">
+                            <i data-lucide="wind" class="w-5 h-5 text-blue-600"></i>
+                            Fume Hoods (Sec 3.3.2)
+                        </h3>
+                        <div class="space-y-3">
+                            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200/70">
+                                <span class="font-bold text-slate-900 text-xs block mb-1">The 6-Inch Rule</span>
+                                <p class="text-slate-600 text-xs leading-relaxed">
+                                    All work involving volatile or toxic substances must be performed at least 6 inches inside the hood for proper laminar airflow.
+                                </p>
+                            </div>
+                            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200/70">
+                                <span class="font-bold text-slate-900 text-xs block mb-1">Sash Integrity</span>
+                                <p class="text-slate-600 text-xs leading-relaxed">
+                                    Never work with the sash raised above the certified safety mark. The sash serves as a physical shield against splashes and reactions.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Segregation Map -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200/90 shadow-sm">
+                        <h3 class="font-display font-bold text-base mb-1 flex items-center gap-2 text-slate-900">
+                            <i data-lucide="trash-2" class="w-5 h-5 text-amber-600"></i>
+                            Waste Segregation Map (Sec 3.4.1)
+                        </h3>
+                        <p class="text-xs text-slate-500 mb-4">Click each waste stream to inspect its disposal protocol.</p>
+                        <div class="grid grid-cols-2 gap-3">
+                            <button onclick="showWaste('Heavy Metals', 'Toxic metal ions (Cu, Ni, Cr, Pb). Collected separately in designated carboys to protect UPLB water lines.', 'blue')" class="p-4 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50/60 transition-all text-left">
+                                <span class="text-xs font-bold text-blue-900 block">Heavy Metals</span>
+                                <span class="text-[11px] text-slate-500">Cu, Ni, Cr, Pb ions</span>
+                            </button>
+                            <button onclick="showWaste('Organic Dyes', 'Methylene Blue, Crystal Violet. Highly persistent pollutants. Solid waste (filters) goes in the Hazardous Solid bin.', 'purple')" class="p-4 rounded-xl border border-slate-200 hover:border-purple-500 hover:bg-purple-50/60 transition-all text-left">
+                                <span class="text-xs font-bold text-purple-900 block">Organic Dyes</span>
+                                <span class="text-[11px] text-slate-500">Persistent stains &amp; filters</span>
+                            </button>
+                            <button onclick="showWaste('Acid / Base', 'Must be segregated from organic solvents. Mixing strong acids with organics can cause violent fire or explosion risks.', 'amber')" class="p-4 rounded-xl border border-slate-200 hover:border-amber-500 hover:bg-amber-50/60 transition-all text-left">
+                                <span class="text-xs font-bold text-amber-900 block">Acid / Base</span>
+                                <span class="text-[11px] text-slate-500">Corrosive aqueous solutions</span>
+                            </button>
+                            <button onclick="showWaste('Halogenated Solvents', 'Organic solvents containing F, Cl, Br, or I (e.g., Chloroform, Dichloromethane). Strictly separate from non-halogenated organics.', 'red')" class="p-4 rounded-xl border border-slate-200 hover:border-red-500 hover:bg-red-50/60 transition-all text-left">
+                                <span class="text-xs font-bold text-red-900 block">Halogenated</span>
+                                <span class="text-[11px] text-slate-500">F, Cl, Br, I solvents</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <!-- Dynamic Hygiene / Waste Detail Card -->
+                    <div id="hygiene-detail" class="bg-slate-900 rounded-2xl p-8 text-white border border-slate-800 min-h-[230px] flex flex-col justify-between transition-colors duration-300">
+                        <div id="hygiene-placeholder">
+                            <span class="text-[11px] font-bold uppercase tracking-wider text-blue-400 block mb-2">Never Return Rule</span>
+                            <h3 class="font-display text-2xl font-bold mb-3">Tool Integrity (Sec 3.3.1)</h3>
+                            <p class="text-sm text-slate-300 leading-relaxed">
+                                To prevent violent reactions or stock contamination, <strong>never return unused chemicals</strong> to the original supply bottle. Never insert your own pipettes or spatulas directly into stock bottles; always pour a small amount into a clean secondary container.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Post-Lab & Storing Samples -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200/90 shadow-sm">
+                        <h3 class="font-display font-bold text-base mb-2 flex items-center gap-2 text-slate-900">
+                            <i data-lucide="tag" class="w-5 h-5 text-emerald-600"></i>
+                            Post-Lab &amp; Sample Labeling (Sec 2.3)
+                        </h3>
+                        <p class="text-xs text-slate-600 mb-5 leading-relaxed">
+                            Ensure furnaces and gas lines are turned off. Common areas must be left cleaner than found. Unlabeled containers will be discarded immediately. Required label format:
+                        </p>
+
+                        <div class="bg-amber-50/80 p-4 rounded-xl border border-amber-200/80 shadow-sm max-w-xs mx-auto">
+                            <div class="sample-label w-full min-h-[120px] pt-1">
+                                <p class="text-xs font-mono text-slate-800 border-b border-slate-300 mx-2 pb-0.5 mb-[6px]"><span class="text-slate-400">Name:</span> Juan Dela Cruz</p>
+                                <p class="text-xs font-mono text-slate-800 border-b border-slate-300 mx-2 pb-0.5 mb-[6px]"><span class="text-slate-400">Sec: </span> MatE 11 (T7)</p>
+                                <p class="text-xs font-mono text-slate-800 border-b border-slate-300 mx-2 pb-0.5 mb-[6px]"><span class="text-slate-400">FIC: </span> Prof. Reyes</p>
+                                <p class="text-xs font-mono text-slate-800 border-b border-slate-300 mx-2 pb-0.5 mb-[6px]"><span class="text-slate-400">Sem: </span> 1st Sem 2026</p>
+                                <p class="text-xs font-mono text-slate-800 mx-2"><span class="text-slate-400">Date:</span> 08/25/2026</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center pt-2">
+                <button onclick="navTo('screen-ppe')" class="text-slate-500 hover:text-slate-900 text-sm font-semibold flex items-center gap-2 px-4 py-2.5 rounded-xl hover:bg-white transition-colors">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Back
+                </button>
+                <button onclick="updateProgress(40); navTo('screen-ghs')" class="bg-up-maroon hover:bg-up-maroonDark text-white px-7 py-3.5 rounded-xl font-display font-bold text-sm transition-all shadow-sm flex items-center gap-2">
+                    <span>Next: Hazard Identification (GHS)</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- ===================================================================
+             SCREEN 4: MODULE 3 - GHS HAZARD IDENTIFICATION
+             =================================================================== -->
+        <section id="screen-ghs" class="onboarding-screen hidden space-y-8">
+            <div class="bg-white p-6 rounded-2xl border border-slate-200/90 shadow-sm flex flex-wrap items-center justify-between gap-4">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-up-maroon block mb-0.5">Module 03 of 07</span>
+                    <h2 class="font-display text-2xl font-bold text-slate-900">Hazard Identification (GHS)</h2>
+                    <p class="text-slate-500 text-xs mt-0.5">Recognize the 9 standard Globally Harmonized System chemical pictograms.</p>
+                </div>
+                <div class="flex items-center gap-1.5">
+                    <div class="w-6 h-2 bg-up-maroon rounded-full"></div>
+                    <div class="w-6 h-2 bg-up-maroon rounded-full"></div>
+                    <div class="w-6 h-2 bg-up-maroon rounded-full"></div>
+                    <div class="w-6 h-2 bg-slate-200 rounded-full"></div>
+                    <div class="w-6 h-2 bg-slate-200 rounded-full"></div>
+                    <div class="w-6 h-2 bg-slate-200 rounded-full"></div>
+                    <div class="w-6 h-2 bg-slate-200 rounded-full"></div>
+                </div>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-2xl border border-slate-200/90 shadow-sm">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-display font-bold text-base flex items-center gap-2 text-slate-900">
+                            <i data-lucide="alert-triangle" class="w-5 h-5 text-amber-600"></i>
+                            GHS Pictograms
+                        </h3>
+                        <span id="ghs-counter" class="text-xs font-semibold text-up-maroon bg-red-50 px-2.5 py-0.5 rounded-full border border-red-100">
+                            0 / 9 Reviewed
+                        </span>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-6">Click on all 9 pictograms to study their specific hazards and unlock Module 4.</p>
+                    <div class="grid grid-cols-3 gap-3.5" id="ghs-grid">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <div class="bg-slate-900 rounded-2xl p-8 flex flex-col justify-center items-center text-center text-white border border-slate-800 min-h-[340px]">
+                    <div id="ghs-icon-display" class="mb-6 flex justify-center items-center w-28 h-28 rounded-2xl bg-white/5 border border-white/10 p-3">
+                        <i data-lucide="info" class="w-12 h-12 text-slate-500"></i>
+                    </div>
+                    <h3 id="ghs-title" class="font-display text-2xl sm:text-3xl font-bold mb-4 text-white">Select a Pictogram</h3>
+                    <div id="ghs-desc" class="text-slate-300 text-sm leading-relaxed max-w-sm mx-auto">
+                        <p>Review each Globally Harmonized System symbol on the left to understand the specific chemical hazards before handling any reagent.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center pt-2">
+                <button onclick="navTo('screen-hygiene')" class="text-slate-500 hover:text-slate-900 text-sm font-semibold flex items-center gap-2 px-4 py-2.5 rounded-xl hover:bg-white transition-colors">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Back
+                </button>
+                <button id="btn-next-ghs" disabled onclick="updateProgress(55); navTo('screen-nfpa')" class="bg-slate-200 text-slate-400 px-7 py-3.5 rounded-xl font-display font-bold text-sm cursor-not-allowed transition-all">
+                    Review all 9 pictograms to continue
+                </button>
+            </div>
+        </section>
+
+        <!-- ===================================================================
+             SCREEN 5: MODULE 4 - NFPA 704 DIAMOND
+             =================================================================== -->
+        <section id="screen-nfpa" class="onboarding-screen hidden space-y-8">
+            <div class="bg-white p-6 rounded-2xl border border-slate-200/90 shadow-sm flex flex-wrap items-center justify-between gap-4">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-up-maroon block mb-0.5">Module 04 of 07</span>
+                    <h2 class="font-display text-2xl font-bold text-slate-900">NFPA 704 Hazard Diamond</h2>
+                    <p class="text-slate-500 text-xs mt-0.5">Understand the National Fire Protection Association (NFPA) 704 rating scale (0 to 4).</p>
+                </div>
+                <div class="flex items-center gap-1.5">
+                    <div class="w-6 h-2 bg-up-maroon rounded-full"></div>
+                    <div class="w-6 h-2 bg-up-maroon rounded-full"></div>
+                    <div class="w-6 h-2 bg-up-maroon rounded-full"></div>
+                    <div class="w-6 h-2 bg-up-maroon rounded-full"></div>
+                    <div class="w-6 h-2 bg-slate-200 rounded-full"></div>
+                    <div class="w-6 h-2 bg-slate-200 rounded-full"></div>
+                    <div class="w-6 h-2 bg-slate-200 rounded-full"></div>
+                </div>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-6">
+                <!-- Interactive Diamond -->
+                <div class="bg-white p-8 rounded-2xl border border-slate-200/90 shadow-sm flex flex-col items-center justify-center min-h-[380px]">
+                    <div class="w-full flex items-center justify-between mb-2">
+                        <h3 class="font-display font-bold text-base text-slate-900">NFPA 704 Diamond</h3>
+                        <span id="nfpa-counter" class="text-xs font-semibold text-up-maroon bg-red-50 px-2.5 py-0.5 rounded-full border border-red-100">
+                            0 / 4 Quadrants
+                        </span>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-8 w-full">Click each of the 4 colored quadrants below to inspect its rating scale.</p>
+                    
+                    <svg viewBox="0 0 200 200" class="w-full max-w-[260px]">
+                        <defs>
+                            <filter id="nfpa-shadow"><feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.16"/></filter>
+                        </defs>
+                        <!-- Top / Red / Flammability -->
+                        <polygon points="100,4 148,52 100,100 52,52" fill="#ef4444" stroke="#ffffff" stroke-width="3" class="nfpa-segment" onclick="selectNFPA('red')" filter="url(#nfpa-shadow)"/>
+                        <!-- Left / Blue / Health -->
+                        <polygon points="52,52 100,100 52,148 4,100" fill="#3b82f6" stroke="#ffffff" stroke-width="3" class="nfpa-segment" onclick="selectNFPA('blue')" filter="url(#nfpa-shadow)"/>
+                        <!-- Right / Yellow / Instability -->
+                        <polygon points="148,52 196,100 148,148 100,100" fill="#eab308" stroke="#ffffff" stroke-width="3" class="nfpa-segment" onclick="selectNFPA('yellow')" filter="url(#nfpa-shadow)"/>
+                        <!-- Bottom / White / Specific -->
+                        <polygon points="100,100 148,148 100,196 52,148" fill="#ffffff" stroke="#cbd5e1" stroke-width="2" class="nfpa-segment" onclick="selectNFPA('white')" filter="url(#nfpa-shadow)"/>
+                        
+                        <!-- Text overlays -->
+                        <text x="100" y="60" text-anchor="middle" fill="white" font-size="22" font-weight="bold" pointer-events="none" font-family="Inter, sans-serif">3</text>
+                        <text x="52" y="108" text-anchor="middle" fill="white" font-size="22" font-weight="bold" pointer-events="none" font-family="Inter, sans-serif">2</text>
+                        <text x="148" y="108" text-anchor="middle" fill="#0f172a" font-size="22" font-weight="bold" pointer-events="none" font-family="Inter, sans-serif">1</text>
+                        <text x="100" y="156" text-anchor="middle" fill="#0f172a" font-size="20" font-weight="bold" pointer-events="none" font-family="Inter, sans-serif">OX</text>
+                    </svg>
+                </div>
+
+                <!-- Explanation Area -->
+                <div id="nfpa-detail-box" class="bg-slate-900 rounded-2xl p-8 flex flex-col justify-center text-white border border-slate-800 min-h-[380px]">
+                    <div id="nfpa-icon" class="mb-4 text-slate-500">
+                        <i data-lucide="help-circle" class="w-10 h-10"></i>
+                    </div>
+                    <h3 id="nfpa-title" class="font-display text-2xl sm:text-3xl font-bold mb-4">Select a Quadrant</h3>
+                    <div id="nfpa-desc" class="text-sm text-slate-300 leading-relaxed space-y-2">
+                        <p>The NFPA 704 diamond provides emergency responders and lab users a quick visual summary of the health, flammability, instability, and special hazards of a material.</p>
+                        <p class="text-xs text-slate-400 pt-2">Click all 4 quadrants on the diamond to proceed to Module 5.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center pt-2">
+                <button onclick="navTo('screen-ghs')" class="text-slate-500 hover:text-slate-900 text-sm font-semibold flex items-center gap-2 px-4 py-2.5 rounded-xl hover:bg-white transition-colors">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Back
+                </button>
+                <button id="btn-next-nfpa" disabled onclick="updateProgress(65); navTo('screen-emergency')" class="bg-slate-200 text-slate-400 px-7 py-3.5 rounded-xl font-display font-bold text-sm cursor-not-allowed transition-all">
+                    Inspect all 4 quadrants to continue
+                </button>
+            </div>
+        </section>
+
+        <!-- ===================================================================
+             SCREEN 6: MODULE 5 - EMERGENCY PROTOCOLS
+             =================================================================== -->
+        <section id="screen-emergency" class="onboarding-screen hidden space-y-8">
+            <div class="bg-white p-6 rounded-2xl border border-slate-200/90 shadow-sm flex flex-wrap items-center justify-between gap-4">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-up-maroon block mb-0.5">Module 05 of 07</span>
+                    <h2 class="font-display text-2xl font-bold text-slate-900">Emergency &amp; Life Safety</h2>
+                    <p class="text-slate-500 text-xs mt-0.5">Section 5.1 – 5.5 (Fire, Earthquake, Spills &amp; Incident Reporting)</p>
+                </div>
+                <div class="flex items-center gap-1.5">
+                    <div class="w-6 h-2 bg-up-maroon rounded-full"></div>
+                    <div class="w-6 h-2 bg-up-maroon rounded-full"></div>
+                    <div class="w-6 h-2 bg-up-maroon rounded-full"></div>
+                    <div class="w-6 h-2 bg-up-maroon rounded-full"></div>
+                    <div class="w-6 h-2 bg-up-maroon rounded-full"></div>
+                    <div class="w-6 h-2 bg-slate-200 rounded-full"></div>
+                    <div class="w-6 h-2 bg-slate-200 rounded-full"></div>
+                </div>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-6">
+                <div class="space-y-4">
+                    <!-- Fire Response -->
+                    <div class="bg-white border border-slate-200/90 p-6 rounded-2xl flex gap-4 shadow-sm">
+                        <div class="w-11 h-11 rounded-xl bg-red-50 border border-red-100 text-red-600 flex items-center justify-center shrink-0">
+                            <i data-lucide="flame" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-display font-bold text-base text-slate-900 mb-2">Fire Response (Sec 5.2)</h3>
+                            <ul class="text-xs text-slate-600 space-y-1.5 list-disc pl-4 leading-relaxed">
+                                <li><strong class="text-slate-800">Clothing Fire:</strong> Stop, Drop, and Roll. Use the safety shower immediately.</li>
+                                <li><strong class="text-slate-800">Extinguishers (PASS):</strong> Pull, Aim, Squeeze, Sweep. Use Type ABC or Type D. <span class="text-red-700 font-semibold underline">Never</span> use CO2 on a person (causes asphyxiation/frostbite).</li>
+                                <li><strong class="text-slate-800">Building Fire:</strong> Shout "FIRE!", turn off gas/furnaces if safe, evacuate, and close the door behind you.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Earthquake Protocol -->
+                    <div class="bg-white border border-slate-200/90 p-6 rounded-2xl flex gap-4 shadow-sm">
+                        <div class="w-11 h-11 rounded-xl bg-amber-50 border border-amber-100 text-amber-600 flex items-center justify-center shrink-0">
+                            <i data-lucide="activity" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-display font-bold text-base text-slate-900 mb-2">Earthquake Protocol (Sec 5.3)</h3>
+                            <ul class="text-xs text-slate-600 space-y-1.5 list-disc pl-4 leading-relaxed">
+                                <li><strong class="text-slate-800">During:</strong> Drop, Cover, and Hold under a sturdy workbench. Stay away from glassware and heavy UTMs.</li>
+                                <li><strong class="text-slate-800">After:</strong> Shut down gas lines and furnaces immediately, then evacuate calmly.</li>
+                                <li><strong class="text-slate-800">Muster Point:</strong> Do not leave the DES area until the FIC accounts for your logbook "Time-In" as "Safe" (Sec 5.4).</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Exposure & Spills -->
+                    <div class="bg-white border border-slate-200/90 p-6 rounded-2xl flex gap-4 shadow-sm">
+                        <div class="w-11 h-11 rounded-xl bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center shrink-0">
+                            <i data-lucide="droplets" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-display font-bold text-base text-slate-900 mb-2">Exposure &amp; Spills (Sec 5.1)</h3>
+                            <p class="text-xs text-slate-600 mb-2 leading-relaxed">
+                                Flush affected eyes or skin with copious water for a <strong class="text-slate-900">minimum of 15 minutes</strong>. For ingestion, do not induce vomiting unless instructed by the SDS.
+                            </p>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                For major spills (&gt;1 Liter), evacuate the room, close the door, and notify the Lab Technician immediately.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900 rounded-2xl p-8 flex flex-col justify-between text-white border border-slate-800">
+                    <div>
+                        <h3 class="font-display text-xl font-bold mb-4 flex items-center gap-2">
+                            <i data-lucide="phone-call" class="w-5 h-5 text-red-400"></i>
+                            Emergency Directory
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="bg-slate-800/80 p-5 rounded-xl border border-slate-700/80">
+                                <p class="text-xs text-slate-400 font-bold uppercase tracking-wider mb-1.5">Security &amp; Safety Office (SSO)</p>
+                                <p class="text-white font-mono text-base font-semibold">0921-890-1259 (Smart)</p>
+                                <p class="text-white font-mono text-base font-semibold">0975-928-7880 (Globe)</p>
+                            </div>
+                            <div class="bg-slate-800/80 p-5 rounded-xl border border-slate-700/80">
+                                <p class="text-xs text-slate-400 font-bold uppercase tracking-wider mb-1.5">University Health Service (UHS)</p>
+                                <p class="text-white font-mono text-base font-semibold">0967-317-8385 (Globe)</p>
+                                <p class="text-white font-mono text-base font-semibold">0961-578-9139 (Smart)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 p-5 bg-white text-slate-900 rounded-xl">
+                        <h4 class="font-display font-bold text-sm flex items-center gap-2 mb-1.5">
+                            <i data-lucide="file-warning" class="w-4 h-4 text-up-maroon"></i>
+                            Form 5: Incident Report
+                        </h4>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Must be submitted within <strong>24 hours</strong> for any injuries, fires, chemical spills &gt;100mL, or near-misses (Sec 5.5.1).
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center pt-2">
+                <button onclick="navTo('screen-nfpa')" class="text-slate-500 hover:text-slate-900 text-sm font-semibold flex items-center gap-2 px-4 py-2.5 rounded-xl hover:bg-white transition-colors">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Back
+                </button>
+                <button onclick="updateProgress(75); navTo('screen-admin')" class="bg-up-maroon hover:bg-up-maroonDark text-white px-7 py-3.5 rounded-xl font-display font-bold text-sm transition-all shadow-sm flex items-center gap-2">
+                    <span>Next: Admin &amp; Spaces</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- ===================================================================
+             SCREEN 7: MODULE 6 - ADMINISTRATION, FORMS & PENALTIES
+             =================================================================== -->
+        <section id="screen-admin" class="onboarding-screen hidden space-y-8">
+            <div class="bg-white p-6 rounded-2xl border border-slate-200/90 shadow-sm flex flex-wrap items-center justify-between gap-4">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-up-maroon block mb-0.5">Module 06 of 07</span>
+                    <h2 class="font-display text-2xl font-bold text-slate-900">Administration, Forms &amp; Penalties</h2>
+                    <p class="text-slate-500 text-xs mt-0.5">Section 1.4 (Oversight), 2.4 (Penalties) &amp; 4.3 (Forms)</p>
+                </div>
+                <div class="flex items-center gap-1.5">
+                    <div class="w-6 h-2 bg-up-maroon rounded-full"></div>
+                    <div class="w-6 h-2 bg-up-maroon rounded-full"></div>
+                    <div class="w-6 h-2 bg-up-maroon rounded-full"></div>
+                    <div class="w-6 h-2 bg-up-maroon rounded-full"></div>
+                    <div class="w-6 h-2 bg-up-maroon rounded-full"></div>
+                    <div class="w-6 h-2 bg-up-maroon rounded-full"></div>
+                    <div class="w-6 h-2 bg-slate-200 rounded-full"></div>
+                </div>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-6">
+                <div class="space-y-6">
+                    <!-- Violations & Penalties -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200/90 shadow-sm">
+                        <h3 class="font-display font-bold text-base mb-4 flex items-center gap-2 text-slate-900">
+                            <i data-lucide="gavel" class="w-5 h-5 text-up-maroon"></i>
+                            Violations &amp; Penalties (Sec 2.4)
+                        </h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center gap-4 bg-slate-50 p-3.5 rounded-xl border border-slate-200/70">
+                                <div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-800 text-xs font-bold flex items-center justify-center shrink-0">1</div>
+                                <p class="text-xs text-slate-700 leading-relaxed"><strong>First Offense:</strong> Verbal warning and immediate correction of the hazard.</p>
+                            </div>
+                            <div class="flex items-center gap-4 bg-slate-50 p-3.5 rounded-xl border border-slate-200/70">
+                                <div class="w-8 h-8 rounded-lg bg-orange-100 text-orange-800 text-xs font-bold flex items-center justify-center shrink-0">2</div>
+                                <p class="text-xs text-slate-700 leading-relaxed"><strong>Second Offense:</strong> Dismissal from the lab session and a "Laboratory Suspension" of 2 weeks (also applies to no-show bookings).</p>
+                            </div>
+                            <div class="flex items-center gap-4 bg-red-50/70 p-3.5 rounded-xl border border-red-200">
+                                <div class="w-8 h-8 rounded-lg bg-up-maroon text-white text-xs font-bold flex items-center justify-center shrink-0">3</div>
+                                <p class="text-xs text-red-950 leading-relaxed"><strong>Third Offense:</strong> Permanent loss of laboratory access for the remainder of the semester.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Activity Classifications -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200/90 shadow-sm">
+                        <h3 class="font-display font-bold text-base mb-3 text-slate-900">Activity Classifications</h3>
+                        <div class="space-y-2.5 text-xs text-slate-600">
+                            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/60 flex items-center justify-between">
+                                <span class="font-bold text-slate-900">Type 1 Activity</span>
+                                <span>Instructional (Scheduled class experiments)</span>
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/60 flex items-center justify-between">
+                                <span class="font-bold text-slate-900">Type 2 Activity</span>
+                                <span>Research Project (Requires Form 1)</span>
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/60 flex items-center justify-between">
+                                <span class="font-bold text-slate-900">Type 3 Activity</span>
+                                <span>Special / Thesis (Highest oversight)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <!-- Mandatory Forms -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200/90 shadow-sm">
+                        <h3 class="font-display font-bold text-base mb-1 text-slate-900">Mandatory Forms (Sec 4.3)</h3>
+                        <p class="text-xs text-slate-500 mb-4">Click each form below to review its filing requirement.</p>
+                        <div class="space-y-2">
+                            <button type="button" class="w-full flex justify-between items-center p-3.5 bg-slate-50 hover:bg-red-50/50 rounded-xl border border-slate-200/80 hover:border-up-maroon/40 transition-all text-left group" onclick="showFormDetail('Form 1: Lab Request', 'Required at least 3 days in advance for Type 2 and Type 3 laboratory activities.')">
+                                <span class="text-xs font-bold text-slate-800 group-hover:text-up-maroon">Form 1: Lab Request</span>
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                            </button>
+                            <button type="button" class="w-full flex justify-between items-center p-3.5 bg-slate-50 hover:bg-red-50/50 rounded-xl border border-slate-200/80 hover:border-up-maroon/40 transition-all text-left group" onclick="showFormDetail('Form 2: Glassware &amp; Equipment', 'Submit to the Laboratory Technician. Requires surrender of your UP ID until borrowed items are returned intact.')">
+                                <span class="text-xs font-bold text-slate-800 group-hover:text-up-maroon">Form 2: Glassware Request</span>
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                            </button>
+                            <button type="button" class="w-full flex justify-between items-center p-3.5 bg-slate-50 hover:bg-red-50/50 rounded-xl border border-slate-200/80 hover:border-up-maroon/40 transition-all text-left group" onclick="showFormDetail('Form 3: Reagents &amp; Chemicals', 'Must attach a valid Safety Data Sheet (SDS) for all requested chemicals.')">
+                                <span class="text-xs font-bold text-slate-800 group-hover:text-up-maroon">Form 3: Chemical Request</span>
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                            </button>
+                            <button type="button" class="w-full flex justify-between items-center p-3.5 bg-slate-50 hover:bg-red-50/50 rounded-xl border border-slate-200/80 hover:border-up-maroon/40 transition-all text-left group" onclick="showFormDetail('Form 4: Off-Hours Permit', 'Required 3 days in advance. Approved by the Chair; undergraduate students must be accompanied by an authorized faculty/REPS/tech escort (Graduate students are not accepted as supervising personnel).')">
+                                <span class="text-xs font-bold text-slate-800 group-hover:text-up-maroon">Form 4: Off-Hours Permit</span>
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                            </button>
+                        </div>
+                        <div id="form-info" class="mt-4 p-4 bg-slate-900 rounded-xl text-xs text-slate-200 hidden border border-slate-800 leading-relaxed"></div>
+                    </div>
+
+                    <!-- Operating Hours -->
+                    <div class="bg-amber-50/80 border border-amber-200 p-6 rounded-2xl">
+                        <h3 class="text-amber-950 font-display font-bold text-sm mb-1.5 flex items-center gap-2">
+                            <i data-lucide="clock" class="w-4 h-4 text-amber-700"></i>
+                            Operating Hours &amp; Room B108 Oversight
+                        </h3>
+                        <p class="text-xs text-amber-900 leading-relaxed">
+                            <strong>Regular Hours:</strong> 8:00 AM – 5:00 PM (Mon–Fri). Off-hours work is only permitted until <strong>7:00 PM</strong> and requires Form 4 approval (Sec 4.1). Instructional Room B108 is overseen by the <strong>Instructional and Research Laboratory Facilities Committee (IRLFC)</strong>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center pt-2">
+                <button onclick="navTo('screen-emergency')" class="text-slate-500 hover:text-slate-900 text-sm font-semibold flex items-center gap-2 px-4 py-2.5 rounded-xl hover:bg-white transition-colors">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Back
+                </button>
+                <button onclick="initSimulation(); navTo('screen-sim');" class="bg-up-maroon hover:bg-up-maroonDark text-white px-7 py-3.5 rounded-xl font-display font-bold text-sm transition-all shadow-sm flex items-center gap-2">
+                    <span>Next: Interactive Lab Task</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- ===================================================================
+             SCREEN 8: MODULE 7 - INTERACTIVE LAB SIMULATION
+             =================================================================== -->
+        <section id="screen-sim" class="onboarding-screen hidden space-y-6">
+            <div class="bg-white p-6 rounded-2xl border border-slate-200/90 shadow-sm flex flex-wrap items-center justify-between gap-4">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-up-maroon block mb-0.5">Module 07 of 07</span>
+                    <h2 class="font-display text-2xl font-bold text-slate-900">Interactive Laboratory Walkthrough</h2>
+                    <p class="text-slate-500 text-xs mt-0.5">Complete the 3 mandatory lab tasks sequentially on the interactive canvas to unlock the final exam.</p>
+                </div>
+                <div class="flex items-center gap-1.5">
+                    <div class="w-6 h-2 bg-up-maroon rounded-full"></div>
+                    <div class="w-6 h-2 bg-up-maroon rounded-full"></div>
+                    <div class="w-6 h-2 bg-up-maroon rounded-full"></div>
+                    <div class="w-6 h-2 bg-up-maroon rounded-full"></div>
+                    <div class="w-6 h-2 bg-up-maroon rounded-full"></div>
+                    <div class="w-6 h-2 bg-up-maroon rounded-full"></div>
+                    <div class="w-6 h-2 bg-up-maroon rounded-full"></div>
+                </div>
+            </div>
+
+            <div class="grid lg:grid-cols-4 gap-6">
+                <!-- Checklist Sidebar -->
+                <div class="lg:col-span-1 bg-white p-6 rounded-2xl border border-slate-200/90 shadow-sm flex flex-col">
+                    <h3 class="font-display font-bold text-sm text-slate-900 mb-4 border-b border-slate-100 pb-3">Mission Checklist</h3>
+                    <div class="space-y-4 text-xs" id="sim-tasks">
+                        <div class="flex items-start gap-3 text-slate-900 font-bold" id="task1-ui">
+                            <i data-lucide="circle-dashed" class="w-4 h-4 text-blue-500 shrink-0 mt-0.5"></i>
+                            <p>1. Sign the Room Logbook (Sec 2.1)</p>
+                        </div>
+                        <div class="flex items-start gap-3 text-slate-400" id="task2-ui">
+                            <i data-lucide="circle-dashed" class="w-4 h-4 shrink-0 mt-0.5"></i>
+                            <p>2. Setup Fume Hood: Turn on Fan &amp; Pull Sash Down</p>
+                        </div>
+                        <div class="flex items-start gap-3 text-slate-400" id="task3-ui">
+                            <i data-lucide="circle-dashed" class="w-4 h-4 shrink-0 mt-0.5"></i>
+                            <p>3. Cleanup: Sort Tissue, Chemical Beaker, and Dirty Flask</p>
+                        </div>
+                    </div>
+                    <div class="mt-auto pt-6">
+                        <button id="btn-next-sim" disabled onclick="navTo('screen-quiz')" class="w-full bg-slate-200 text-slate-400 py-3 rounded-xl font-display font-bold text-xs cursor-not-allowed transition-all">
+                            Exam Locked
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Interactive SVG Canvas -->
+                <div class="lg:col-span-3 bg-slate-300 rounded-2xl overflow-hidden relative shadow-inner aspect-video border border-slate-300" id="sim-container">
+                    <svg viewBox="0 0 800 450" class="w-full h-full" id="sim-svg" onpointerdown="handleDragStart(event)" onpointermove="handleDragMove(event)" onpointerup="handleDragEnd(event)" onpointercancel="handleDragEnd(event)">
+                        <defs><filter id="shadow"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.3"/></filter></defs>
+                        <rect width="800" height="450" fill="#e2e8f0" />
+                        <rect x="0" y="320" width="800" height="130" fill="#cbd5e1" />
+                        <rect x="20" y="280" width="760" height="40" fill="#94a3b8" />
+                        
+                        <g id="obj-logbook" class="hazard-zone pulse-highlight" onclick="simInteract('logbook')">
+                            <rect x="80" y="250" width="60" height="70" fill="white" stroke="#1e293b" stroke-width="2" rx="2" filter="url(#shadow)" />
+                            <line x1="90" y1="260" x2="130" y2="260" stroke="#cbd5e1" stroke-width="2" />
+                            <line x1="90" y1="270" x2="130" y2="270" stroke="#cbd5e1" stroke-width="2" />
+                            <text x="110" y="290" font-size="10" fill="#1e293b" text-anchor="middle" font-weight="bold">LOGBOOK</text>
+                        </g>
+
+                        <g id="zone-sink" opacity="0.4" class="transition-opacity">
+                            <rect x="620" y="280" width="130" height="20" fill="#cbd5e1" rx="4" />
+                            <rect x="630" y="285" width="110" height="10" fill="#94a3b8" rx="2" />
+                            <path d="M685 240 L685 220 C685 210, 710 210, 710 220 L710 230" fill="none" stroke="#64748b" stroke-width="6" />
+                            <text x="685" y="315" font-size="12" fill="#475569" text-anchor="middle" font-weight="bold">WASH SINK</text>
+                        </g>
+
+                        <g id="zone-solid" opacity="0.4" class="transition-opacity">
+                            <rect x="180" y="340" width="70" height="90" fill="#334155" rx="4" filter="url(#shadow)" />
+                            <rect x="175" y="335" width="80" height="10" fill="#1e293b" rx="2" />
+                            <text x="215" y="380" font-size="12" fill="white" text-anchor="middle" font-weight="bold">SOLID</text>
+                            <text x="215" y="395" font-size="10" fill="white" text-anchor="middle">WASTE</text>
+                        </g>
+
+                        <g id="zone-chem" opacity="0.4" class="transition-opacity">
+                            <rect x="280" y="340" width="70" height="90" fill="#f59e0b" rx="4" filter="url(#shadow)" />
+                            <rect x="275" y="335" width="80" height="10" fill="#d97706" rx="2" />
+                            <text x="315" y="380" font-size="12" fill="#78350f" text-anchor="middle" font-weight="bold">CHEM</text>
+                            <text x="315" y="395" font-size="10" fill="#78350f" text-anchor="middle">WASTE</text>
+                        </g>
+
+                        <g id="obj-fumehood">
+                            <rect x="330" y="40" width="260" height="240" fill="#334155" rx="4" filter="url(#shadow)" />
+                            <rect x="345" y="60" width="230" height="150" fill="#1e293b" />
+                            <g id="fh-fan" transform="translate(460, 100)" opacity="0">
+                                <circle cx="0" cy="0" r="20" fill="#475569" />
+                                <path d="M0 -15 L5 0 L0 15 L-5 0 Z" fill="#94a3b8" />
+                                <path d="M-15 0 L0 5 L15 0 L0 -5 Z" fill="#94a3b8" />
+                            </g>
+                            <circle cx="560" cy="250" r="12" fill="#ef4444" id="fh-switch" onclick="simInteract('switch')" />
+                            <text x="560" y="272" font-size="8" fill="white" text-anchor="middle">FAN</text>
+                            <rect x="345" y="60" width="230" height="50" fill="#bae6fd" fill-opacity="0.4" id="fh-sash" stroke="#0284c7" stroke-width="2" />
+                            <line x1="345" y1="140" x2="575" y2="140" stroke="#ef4444" stroke-dasharray="6" stroke-width="3" />
+                            <text x="360" y="155" font-size="10" fill="#ef4444" font-weight="bold">SAFETY LINE</text>
+                        </g>
+
+                        <g id="items-layer" opacity="0">
+                            <g id="drag-tissue" class="draggable" transform="translate(0,0)" data-target="zone-solid">
+                                <rect x="360" y="250" width="25" height="20" fill="#f8fafc" rx="2" filter="url(#shadow)" stroke="#cbd5e1" />
+                                <path d="M365 255 Q 370 260 375 255" stroke="#cbd5e1" fill="none" />
+                                <text x="372" y="245" font-size="10" fill="#475569" text-anchor="middle">Tissue</text>
+                            </g>
+                            <g id="drag-beaker" class="draggable" transform="translate(0,0)" data-target="zone-chem">
+                                <path d="M410 230 L410 270 L440 270 L440 230" stroke="#1e293b" stroke-width="2" fill="none" filter="url(#shadow)" />
+                                <rect x="412" y="245" width="26" height="23" fill="#38bdf8" fill-opacity="0.7" />
+                                <text x="425" y="225" font-size="10" fill="#ef4444" text-anchor="middle" font-weight="bold">Toxic</text>
+                            </g>
+                            <g id="drag-flask" class="draggable" transform="translate(0,0)" data-target="zone-sink">
+                                <path d="M480 230 L480 245 L465 270 L495 270 L480 245" stroke="#1e293b" stroke-width="2" fill="none" filter="url(#shadow)" />
+                                <circle cx="480" cy="260" r="4" fill="#94a3b8" />
+                                <circle cx="475" cy="265" r="3" fill="#94a3b8" />
+                                <text x="480" y="225" font-size="10" fill="#475569" text-anchor="middle">Dirty Flask</text>
+                            </g>
+                        </g>
+                    </svg>
+
+                    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-slate-900/95 text-white px-5 py-3 rounded-xl max-w-md text-center text-xs shadow-xl backdrop-blur border border-slate-700 w-11/12" id="sim-prompt">
+                        <strong>Task 1:</strong> You've just entered the lab. Click the Room Logbook to sign in.
+                    </div>
+
+                    <div id="sim-modal-logbook" class="absolute inset-0 bg-slate-900/60 hidden flex items-center justify-center backdrop-blur-sm z-10">
+                        <div class="bg-white p-6 rounded-2xl w-80 shadow-2xl transform scale-95 transition-transform" id="modal-box">
+                            <h3 class="font-display font-bold text-base border-b pb-2 mb-4 flex items-center gap-2 text-slate-900">
+                                <i data-lucide="book" class="w-4 h-4 text-blue-600"></i> MatE Room Logbook
+                            </h3>
+                            <div class="space-y-2.5 mb-5">
+                                <input type="text" value="Juan Dela Cruz" disabled class="w-full p-2.5 bg-slate-100 border border-slate-200 rounded-lg text-xs text-slate-600 font-medium">
+                                <input type="text" value="Group A (Student)" disabled class="w-full p-2.5 bg-slate-100 border border-slate-200 rounded-lg text-xs text-slate-600 font-medium">
+                                <input type="text" value="Type 1 Experiment" disabled class="w-full p-2.5 bg-slate-100 border border-slate-200 rounded-lg text-xs text-slate-600 font-medium">
+                                <p class="text-[11px] text-slate-400 text-center">Time-In is recorded automatically.</p>
+                            </div>
+                            <button onclick="simSignLogbook()" class="w-full bg-up-maroon text-white py-2.5 rounded-xl font-display font-bold text-xs hover:bg-up-maroonDark transition-all">
+                                Sign In &amp; Proceed
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center pt-2">
+                <button onclick="navTo('screen-admin')" class="text-slate-500 hover:text-slate-900 text-sm font-semibold flex items-center gap-2 px-4 py-2.5 rounded-xl hover:bg-white transition-colors">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Back
+                </button>
+                <span class="text-xs text-slate-400" id="sim-lock-text">Complete all 3 tasks above to unlock the final exam.</span>
+            </div>
+        </section>
+
+        <!-- ===================================================================
+             SCREEN 9: COMPREHENSIVE 50-QUESTION QUIZ
+             =================================================================== -->
+        <section id="screen-quiz" class="onboarding-screen hidden space-y-6">
+            <div class="bg-white p-8 md:p-12 rounded-2xl border border-slate-200/90 shadow-sm max-w-4xl mx-auto">
+                
+                <div id="quiz-area">
+                    <div class="flex flex-wrap justify-between items-center gap-4 mb-8 border-b border-slate-100 pb-5">
+                        <div>
+                            <span class="text-xs font-bold text-up-maroon uppercase tracking-wider block">Final 50-Question Assessment</span>
+                            <span class="text-xs text-slate-500 mt-0.5 block">Score at least 80% (40/50) to earn your induction certificate.</span>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-sm font-display font-bold text-slate-900" id="quiz-counter">Question 1 of 50</span>
+                            <div class="w-36 bg-slate-100 h-2 rounded-full mt-2 overflow-hidden">
+                                <div id="quiz-progress-bar" class="bg-up-maroon h-full transition-all" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="min-h-[240px] flex flex-col justify-center">
+                        <h3 id="q-text" class="font-display text-lg md:text-xl font-bold mb-6 text-slate-900 leading-snug">...</h3>
+                        <div id="q-options" class="grid md:grid-cols-2 gap-3.5"></div>
+                    </div>
+                </div>
+                
+                <div id="quiz-summary" class="hidden text-center space-y-6 py-8">
+                    <div id="quiz-icon" class="flex justify-center"></div>
+                    <div>
+                        <h3 id="quiz-result-title" class="font-display text-3xl font-extrabold text-slate-900"></h3>
+                        <p id="quiz-result-msg" class="text-slate-600 mt-3 max-w-lg mx-auto text-sm sm:text-base leading-relaxed"></p>
+                    </div>
+                    <button id="quiz-cta" class="bg-up-maroon text-white px-10 py-3.5 rounded-xl font-display font-bold text-sm hover:bg-up-maroonDark transition-all shadow-sm"></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================
+             FINAL SCREEN: CERTIFICATE OF INDUCTION
+             =================================================================== -->
+        <section id="screen-cert" class="onboarding-screen hidden flex flex-col items-center">
+            <!-- The cert-to-print ID is strictly sized during PDF generation -->
+            <div id="cert-to-print" class="certificate-bg p-10 md:p-16 w-full max-w-4xl shadow-xl text-center relative bg-white">
+                <div class="absolute top-12 left-12 opacity-[0.03]"><i data-lucide="shield-check" size="200"></i></div>
+                <h4 class="text-slate-500 uppercase tracking-[0.3em] text-[10px] font-black mb-6">University of the Philippines Los Baños</h4>
+                <p class="text-slate-500 italic font-serif text-lg mb-0">College of Engineering and Agro-Industrial Technology</p>
+                <p class="text-slate-500 italic font-serif text-lg mb-2">Department of Engineering Science</p>
+                <h1 class="font-serif text-4xl md:text-5xl text-slate-900 mb-6 mt-4">Certificate of Induction</h1>
+                <p class="text-slate-600 italic mb-10">This certifies that</p>
+                
+                <div class="relative mb-12 max-w-xl mx-auto">
+                    <input type="text" id="final-name" placeholder="[ENTER FULL NAME]" class="text-2xl md:text-4xl font-bold border-b-2 border-slate-300 focus:border-up-maroon outline-none text-center w-full pb-2 uppercase text-slate-900 placeholder-slate-300 bg-transparent">
+                    <p class="text-[9px] text-slate-400 uppercase mt-2 font-bold tracking-widest">Authorized Laboratory User</p>
+                </div>
+
+                <p class="text-sm text-slate-700 max-w-2xl mx-auto mb-16 leading-relaxed">
+                    has successfully passed the comprehensive <strong>Materials Engineering Laboratory Safety Exam</strong> and is officially inducted for the Year 2026. This certification acknowledges mastery of Section 3 Hygiene, PPE Standards, GHS &amp; NFPA Hazard Identification, and Emergency Response.
+                </p>
+
+                <div class="flex justify-between items-end px-4 md:px-12 mt-8">
+                    <div class="text-center">
+                        <div class="w-32 md:w-40 border-b border-slate-400 text-sm py-1 font-bold text-slate-800" id="cert-date">--</div>
+                        <span class="text-[9px] text-slate-500 uppercase font-black tracking-widest mt-1 block">Date of Validity</span>
+                    </div>
+                    
+                    <div class="border-2 border-red-900 p-2 rounded shrink-0 bg-white flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7f1d1d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 3h15"/><path d="M6 3v16a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V3"/><path d="M6 14h12"/></svg>
+                    </div>
+
+                    <div class="text-center">
+                        <div class="w-40 md:w-56 border-b border-slate-400 text-sm py-1 font-serif italic text-slate-800">Department of Engineering Science</div>
+                        <span class="text-[9px] text-slate-500 uppercase font-black tracking-widest mt-1 block">Office of the IRLFC</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-10 flex flex-wrap justify-center gap-3 no-print">
+                <button id="btn-download" onclick="downloadPDF()" class="bg-up-maroon hover:bg-up-maroonDark text-white px-8 py-3.5 rounded-xl font-display font-bold text-sm flex items-center gap-2 transition-all shadow-sm">
+                    <i data-lucide="download" class="w-4 h-4"></i> Download PDF Certificate
+                </button>
+                <button onclick="location.reload()" class="bg-white border border-slate-300 text-slate-700 px-8 py-3.5 rounded-xl font-display font-bold text-sm hover:bg-slate-50 transition-all">
+                    Restart Training
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Clean Minimal Footer -->
+    <footer class="bg-white border-t border-slate-200/80 mt-auto no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-slate-900 text-white flex items-center justify-center">
+                    <i data-lucide="flask-conical" class="w-4 h-4"></i>
+                </div>
+                <div>
+                    <div class="text-xs font-bold text-slate-900">UPLB MatE Laboratory Portal (DES LFM)</div>
+                    <div class="text-[11px] text-slate-500">Department of Engineering Science · CEAT</div>
+                </div>
+            </div>
+            <div class="text-xs text-slate-400 text-center sm:text-right">
+                &copy; 2026 Department of Engineering Science, UPLB. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification Overlay -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-6 py-3.5 rounded-2xl shadow-xl flex items-center gap-3 transform translate-y-32 transition-all duration-300 opacity-0 z-[200] pointer-events-none border border-slate-700">
+        <div id="toast-icon"></div>
+        <p id="toast-msg" class="text-xs font-semibold"></p>
+    </div>
+
+    <script>
+        // =========================================================================
+        // CONFIGURATION
+        // =========================================================================
+        
+        // Set this to false to hide the "Skip to Certificate" button in production
+        var ENABLE_DEV_MODE = false; 
+        
+        // GOOGLE APPS SCRIPT WEB APP URL FOR CERTIFICATE ARCHIVING
+        var GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzypJR-GR71Fd_iBWr9URuU8thXdFG9YiY709B36e8AVuNOBYZhQ1kkhUNr-9XEt1Tp/exec";
+
+        var state = {
+            group: 'Group A',
+            ppeViewed: new Set(),
+            ghsViewed: new Set(),
+            nfpaViewed: new Set(),
+            quizIndex: 0,
+            score: 0,
+            activeQuizData: [] 
+        };
+
+        var PPE_DATA = [
+            { id: 'glasses', title: 'ANSI Z87.1+ Standard', desc: 'Mandatory at all times. Must be worn over prescription glasses if necessary. Missing eye protection has a zero-tolerance policy (Sec 3.1 & 3.2.1).', icon: 'eye' },
+            { id: 'gloves', title: 'Nitrile & Thermal Logic', desc: 'Standard nitrile for chemicals. Use heavy-duty heat resistant gloves for furnace work. The "One-Glove" rule prevents hallway contamination (Sec 3.2.2).', icon: 'hand' },
+            { id: 'coat', title: 'Lab Coat Integrity', desc: 'Must be white, buttoned, and mid-thigh length. Flame retardant blue coats required for high-thermal tasks (Sec 3.2.1).', icon: 'shirt' },
+            { id: 'faceshield', title: 'Face Shields', desc: 'Required for furnace work >500°C or handling cryogenics. Must be worn OVER safety glasses (Sec 3.2.1).', icon: 'shield-alert' }
+        ];
+
+        var GHS_DATA = [
+            { id: 'health', name: 'Health hazard', desc: '<ul class="list-disc pl-4 text-left space-y-1"><li>Carcinogen</li><li>Mutagenicity</li><li>Reproductive toxicity</li><li>Respiratory sensitizer</li><li>Target organ toxicity</li><li>Aspiration toxicity</li></ul>', svg: '<path d="M50 20 C42 20 42 35 50 35 C58 35 58 20 50 20 Z" fill="#000"/><path d="M30 75 Q35 40 50 40 Q65 40 70 75 Z" fill="#000"/><path d="M50 45 L52 52 L59 52 L54 57 L56 64 L50 60 L44 64 L46 57 L41 52 L48 52 Z" fill="#fff"/>' },
+            { id: 'flame', name: 'Flame', desc: '<ul class="list-disc pl-4 text-left space-y-1"><li>Flammables</li><li>Pyrophorics</li><li>Self-heating</li><li>Emits flammable gas</li><li>Self-reactives</li><li>Organic peroxides</li></ul>', svg: '<path d="M50 20 Q35 40 30 55 A20 20 0 0 0 70 55 Q65 40 50 20" fill="#000"/><path d="M50 35 Q58 48 50 65 Q40 48 50 35" fill="#fff"/><rect x="25" y="75" width="50" height="4" fill="#000"/>' },
+            { id: 'exclamation', name: 'Exclamation mark', desc: '<ul class="list-disc pl-4 text-left space-y-1"><li>Irritant (skin and eye)</li><li>Skin sensitizer</li><li>Acute toxicity (harmful)</li><li>Narcotic effects</li><li>Respiratory tract irritant</li><li>Hazardous to ozone layer (non-mandatory)</li></ul>', svg: '<rect x="44" y="25" width="12" height="30" fill="#000"/><rect x="44" y="62" width="12" height="12" fill="#000"/>' },
+            { id: 'cylinder', name: 'Gas cylinder', desc: '<ul class="list-disc pl-4 text-left space-y-1"><li>Gases under pressure</li></ul>', svg: '<g transform="rotate(-30 50 50)"><rect x="25" y="42" width="45" height="16" rx="8" fill="#000"/><rect x="70" y="46" width="10" height="8" fill="#000"/></g>' },
+            { id: 'corrosion', name: 'Corrosion', desc: '<ul class="list-disc pl-4 text-left space-y-1"><li>Skin corrosion / burns</li><li>Eye damage</li><li>Corrosive to metals</li></ul>', svg: '<rect x="20" y="70" width="25" height="5" fill="#000"/><path d="M55 75 Q60 55 70 55 Q80 55 85 75 Z" fill="#000"/><g transform="translate(32, 50) rotate(-30)"><rect x="-5" y="-20" width="10" height="20" fill="none" stroke="#000" stroke-width="2"/><line x1="-5" y1="-5" x2="5" y2="-5" stroke="#000" stroke-width="2"/></g><circle cx="32" cy="65" r="2" fill="#000"/><g transform="translate(65, 45) rotate(-30)"><rect x="-5" y="-20" width="10" height="20" fill="none" stroke="#000" stroke-width="2"/><line x1="-5" y1="-5" x2="5" y2="-5" stroke="#000" stroke-width="2"/></g><circle cx="65" cy="60" r="2" fill="#000"/>' },
+            { id: 'bomb', name: 'Exploding bomb', desc: '<ul class="list-disc pl-4 text-left space-y-1"><li>Explosives</li><li>Self-reactives</li><li>Organic peroxides</li></ul>', svg: '<circle cx="60" cy="55" r="10" fill="#000"/><path d="M40 30 L50 45 M30 40 L45 50 M30 55 L45 55 M40 70 L50 60 M60 20 L62 35 M80 30 L72 45 M85 55 L75 55" stroke="#000" stroke-width="3"/>' },
+            { id: 'oxidizer', name: 'Flame over circle', desc: '<ul class="list-disc pl-4 text-left space-y-1"><li>Oxidizers</li></ul>', svg: '<circle cx="50" cy="60" r="10" fill="none" stroke="#000" stroke-width="4"/><path d="M50 25 Q40 40 40 55 A 10 10 0 0 0 60 55 Q60 40 50 25" fill="#000"/><rect x="25" y="75" width="50" height="4" fill="#000"/>' },
+            { id: 'environment', name: 'Environment <br><span class="text-[9px] font-normal italic text-slate-400">(Non-Mandatory)</span>', desc: '<ul class="list-disc pl-4 text-left space-y-1"><li>Aquatic toxicity</li></ul>', svg: '<path d="M25 80 L35 50 L25 40 M35 50 L45 30 L55 40 M35 65 L45 60" stroke="#000" stroke-width="3" fill="none"/><path d="M55 70 Q65 55 75 70 Q65 85 55 70 Z M75 70 L85 62 L85 78 Z" fill="#000"/><rect x="15" y="80" width="70" height="4" fill="#000"/>' },
+            { id: 'skull', name: 'Skull and crossbones', desc: '<ul class="list-disc pl-4 text-left space-y-1"><li>Acute toxicity (fatal or toxic)</li></ul>', svg: '<path d="M30 30 L70 70 M30 70 L70 30" stroke="#000" stroke-width="6"/><circle cx="50" cy="45" r="14" fill="#000"/><rect x="42" y="55" width="16" height="8" fill="#000"/><circle cx="45" cy="45" r="4" fill="#fff"/><circle cx="55" cy="45" r="4" fill="#fff"/><path d="M50 52 L48 58 L52 58 Z" fill="#fff"/>' }
+        ];
+
+        var NFPA_DATA = {
+            red: {
+                title: "Flammability Hazard (Red)",
+                desc: "<ul class='list-disc pl-5 space-y-2 text-xs sm:text-sm mt-2'><li><strong class='text-red-400'>4 - Deadly:</strong> Flash point below 73°F (22.8°C). Rapidly or completely vaporizes at atmospheric pressure.</li><li><strong class='text-red-400'>3 - Extreme:</strong> Flash point below 100°F (37.8°C). Ignites readily under almost all ambient conditions.</li><li><strong class='text-red-400'>2 - Moderate:</strong> Flash point below 200°F (93.3°C). Must be moderately heated to ignite.</li><li><strong class='text-red-400'>1 - Slight:</strong> Flash point above 200°F. Must be preheated before ignition occurs.</li><li><strong class='text-slate-400'>0 - Minimal:</strong> Will not burn under normal conditions.</li></ul>"
+            },
+            blue: {
+                title: "Health Hazard (Blue)",
+                desc: "<ul class='list-disc pl-5 space-y-2 text-xs sm:text-sm mt-2'><li><strong class='text-blue-400'>4 - Deadly:</strong> Very short exposure could cause death or major residual injury.</li><li><strong class='text-blue-400'>3 - Extreme Danger:</strong> Short exposure could cause serious temporary or residual injury.</li><li><strong class='text-blue-400'>2 - Hazardous:</strong> Intense or continued but not chronic exposure could cause temporary incapacitation.</li><li><strong class='text-blue-400'>1 - Slightly Hazardous:</strong> Exposure would cause irritation with only minor residual injury.</li><li><strong class='text-slate-400'>0 - Normal Material:</strong> Offers no hazard beyond that of ordinary combustible material.</li></ul>"
+            },
+            yellow: {
+                title: "Instability / Reactivity (Yellow)",
+                desc: "<ul class='list-disc pl-5 space-y-2 text-xs sm:text-sm mt-2'><li><strong class='text-yellow-400'>4 - May Detonate:</strong> Readily capable of detonation or explosive decomposition at normal temperatures.</li><li><strong class='text-yellow-400'>3 - Shock/Heat:</strong> Capable of detonation but requires a strong initiating source, or must be heated under confinement.</li><li><strong class='text-yellow-400'>2 - Violent Change:</strong> Undergoes violent chemical change at elevated temperatures and pressures.</li><li><strong class='text-yellow-400'>1 - Unstable if Heated:</strong> Normally stable, but can become unstable at elevated temperatures.</li><li><strong class='text-slate-400'>0 - Stable:</strong> Normally stable, even under fire exposure conditions.</li></ul>"
+            },
+            white: {
+                title: "Specific Hazard (White)",
+                desc: "<div class='grid grid-cols-2 gap-3 mt-4'><div class='bg-slate-800 p-3 rounded-xl text-center border border-slate-700'><strong class='block text-base'>OX</strong><span class='text-xs text-slate-400'>Oxidizer</span></div><div class='bg-slate-800 p-3 rounded-xl text-center border border-slate-700'><strong class='block text-base line-through'>W</strong><span class='text-xs text-slate-400'>Use No Water</span></div><div class='bg-slate-800 p-3 rounded-xl text-center border border-slate-700'><strong class='block text-base'>SA</strong><span class='text-xs text-slate-400'>Simple Asphyxiant</span></div><div class='bg-slate-800 p-3 rounded-xl text-center border border-slate-700'><strong class='block text-base'>COR</strong><span class='text-xs text-slate-400'>Corrosive</span></div></div>"
+            }
+        };
+
+        var RAW_QUIZ_DATA = [
+            { q: "Which of the following is NOT accepted as supervising personnel for an Off-Hours Laboratory Request?", a: ["Graduate Students", "Class FIC", "Laboratory Technician", "Any faculty member"], c: 0 },
+            { q: "Which activity is considered Type 1 in the laboratory?", a: ["Class Laboratory Experiments", "Research Project Experiments", "Thesis Experiments", "Special Class Activities"], c: 0 },
+            { q: "Which can be routes of chemical exposure?", a: ["All of the choices", "Absorption", "Inhalation", "Ingestion"], c: 0 },
+            { q: "Who oversees the instructional laboratory (Room B108)?", a: ["Instructional and Research Laboratory Facilities Committee (IRLFC)", "Research Project Heads", "Faculty-in-charge", "Laboratory Technician"], c: 0 },
+            { q: "What form is required before using the laboratory outside of regular class hours?", a: ["Form 4: Off-Hours Permit", "Form 1: Lab Request", "Form 2: Glassware", "Form 3: Reagents"], c: 0 },
+            { q: "What form is required to request chemical reagents?", a: ["Form 3", "Form 1", "Form 2", "Form 4"], c: 0 },
+            { q: "Which of the following is strictly NOT allowed inside the laboratory?", a: ["Eat and drink", "Conduct experiments", "Do thesis activity", "Use lab equipment"], c: 0 },
+            { q: "Working alone in the laboratory is allowed.", a: ["False", "True", "Sometimes", "Only during daytime"], c: 0 },
+            { q: "What form is required to request glasswares?", a: ["Form 2", "Form 1", "Form 3", "Form 4"], c: 0 },
+            { q: "How long is the validity of the General Laboratory Exam for Group A?", a: ["One academic year", "One semester", "Two semesters", "Till graduation"], c: 0 },
+            { q: "Which of the following safety equipment should you be aware of in the laboratory?", a: ["All of the choices", "Fire extinguisher", "Eye wash station", "Safety shower"], c: 0 },
+            { q: "What happens if a user fails to attend their scheduled laboratory session without prior cancellation?", a: ["2-week suspension of access", "Nothing", "Receive a verbal warning", "1-month suspension"], c: 0 },
+            { q: "Students must process the Laboratory Request Form how many days before the scheduled activity?", a: ["3 days", "1 day", "2 days", "4 days"], c: 0 },
+            { q: "What does SDS/MSDS stand for?", a: ["Safety Data Sheet / Material Safety Data Sheet", "Material Storage Data System", "Manual for Safety Data Sheet", "Manual for Safe Disposal of Substances"], c: 0 },
+            { q: "When mixing a strong acid with water, you should:", a: ["Add acid to the water", "Add water to the acid", "Mix them simultaneously", "They cannot be mixed"], c: 0 },
+            { q: "Which of the following PPE is necessary when working with corrosive chemicals?", a: ["All of the choices (Gloves, Goggles, Lab coat)", "Lab gown only", "Mask only", "Gloves only"], c: 0 },
+            { q: "Chemicals that release toxic or odorous fumes must be prepared and used in the:", a: ["Fume hood", "Lab table", "Countertop", "Sink"], c: 0 },
+            { q: "Concentrated sulfuric acid is considered a:", a: ["Strong Acid", "Strong Base", "Weak Acid", "Weak Base"], c: 0 },
+            { q: "What does the acronym PASS stand for in fire extinguisher use?", a: ["Pull, Aim, Squeeze, Sweep", "Push, Activate, Spray, Stop", "Point, Aim, Spray, Stop", "Pull, Activate, Spray, Set"], c: 0 },
+            { q: "What should you do if your clothing catches fire?", a: ["Stop, drop, and roll", "Run out of the lab", "Use a CO2 fire extinguisher on yourself", "Continue working"], c: 0 },
+            { q: "Which activity is considered Type 2 in the laboratory?", a: ["Research Project Experiments", "Class Laboratory Experiments", "Thesis Experiments", "Special Class Activities"], c: 0 },
+            { q: "Which of the following is the correct way to dispose of chemical waste?", a: ["Follow the specific chemical waste segregation guidelines", "Pour all chemicals down the sink", "Mix all waste chemicals together in one container", "Leave it in the fume hood"], c: 0 },
+            { q: "What should you do if you are unsure about how to dispose of a specific chemical waste?", a: ["Refer to the SDS or ask the FIC", "Guess based on color", "Pour it in the sink with plenty of water", "Mix it with non-halogenated waste"], c: 0 },
+            { q: "Why is it strictly important to segregate different types of chemical waste?", a: ["To prevent violent or explosive reactions between chemicals", "To save space in the waste container", "To reduce the need for labeling", "To make disposal faster"], c: 0 },
+            { q: "What type of chemical can undergo a self-sustained reaction that produces gas and may damage the surroundings?", a: ["Explosive", "Flammable", "Oxidizer", "Toxin"], c: 0 },
+            { q: "What type of chemical can be ignited at normal temperature or can cause a fire through friction?", a: ["Flammable", "Explosive", "Oxidizer", "Corrosive"], c: 0 },
+            { q: "Nitric acid can cause severe skin reaction and is considered a(n):", a: ["Oxidizer (and Corrosive)", "Flammable", "Explosive", "Toxin"], c: 0 },
+            { q: "What type of hazard is represented by a flame over a circle inside a red tilted square?", a: ["Oxidizer", "Flammable", "Explosive", "Irritant"], c: 0 },
+            { q: "Chemicals that can rapidly destroy metals are labeled with which warning?", a: ["Corrosives", "Health Hazard", "Exclamation Mark", "Irritant"], c: 0 },
+            { q: "Pyrophoric materials are considered as:", a: ["Flammable", "Explosive", "Toxin", "Oxidizer"], c: 0 },
+            { q: "All chemicals must be labeled using GHS which stands for:", a: ["Globally Harmonized System", "Global Health System", "Ground Health System", "Globally Health Source"], c: 0 },
+            { q: "What is the NFPA fire hazard number if the flash point of the chemical is below 73 °F (22.8 °C)?", a: ["4", "1", "2", "3"], c: 0 },
+            { q: "What is the most important first step before using any electrical equipment in the laboratory?", a: ["Inspect the power cord and plug for damage", "Ensure the equipment is plugged in", "Check if the equipment has power", "Make sure the equipment is near water"], c: 0 },
+            { q: "During an earthquake, what is the recommended immediate action while inside a laboratory?", a: ["Drop, cover, and hold under a sturdy table or desk.", "Run to the nearest exit.", "Stand under a doorway.", "Continue working and call for help."], c: 0 },
+            { q: "Which of the following is the safest place to be during an earthquake in a laboratory?", a: ["Under a sturdy workbench or table", "Near glass windows or cabinets", "Next to chemical storage shelves", "At the center of the room."], c: 0 },
+            { q: "It's safe to sniff chemicals to identify them if they are unlabeled.", a: ["False", "True", "Maybe", "Sometimes"], c: 0 },
+            { q: "What is the consequence for a student who has an outstanding issue (like broken glassware) at the end of the semester?", a: ["They will not receive clearance and cannot enroll next semester.", "They will be given a warning.", "Their grade will be submitted normally.", "The issue will be resolved by the lab technician."], c: 0 },
+            { q: "Only students in Group A are required to take the laboratory safety exam.", a: ["False, all groups (A to E) must pass an exam.", "True", "Maybe", "Only Group B"], c: 0 },
+            { q: "All users must log in and out using the room logbook each time they enter the laboratory.", a: ["True", "False", "Maybe", "Only if working off-hours"], c: 0 },
+            { q: "On the NFPA Hazard Identification System (diamond), what color represents the health hazard?", a: ["Blue", "Red", "Yellow", "White"], c: 0 },
+            { q: "You accidentally spill a small amount of corrosive chemical on the workbench. Immediate action?", a: ["Inform a supervisor and follow proper cleanup with a spill kit.", "Wipe it up with a paper towel and put it in regular trash.", "Shout for help and run out of the lab.", "Neutralize it with any random substance nearby."], c: 0 },
+            { q: "A beaker slips from your hand and shatters on the floor. What should you do?", a: ["Inform the FIC or lab tech, and dispose in the designated broken glass container.", "Pick up large pieces with bare hands.", "Leave it and tell the next person to be careful.", "Glue it back to avoid paying."], c: 0 },
+            { q: "You notice an electrical cord has a frayed wire. A student is about to plug it in. Your responsibility?", a: ["Warn the student not to use it, and immediately report to the lab technician.", "Say nothing, as it's not your equipment.", "Quickly unplug it and hide the cord.", "Attempt to fix it with electrical tape."], c: 0 },
+            { q: "You need to leave the lab briefly, but your experimental setup is running. Correct procedure?", a: ["You must safely shut it down or have someone actively monitor it.", "Leave it running; it's only for a minute.", "Ask anyone in the hallway to watch it.", "Leave a sticky note saying you'll be back."], c: 0 },
+            { q: "A friend without safety clearance enters the lab to chat. What should you do?", a: ["Politely explain that unauthorized personnel are not allowed and they must leave.", "Let them stay if they don't touch anything.", "Ask them to wear a lab coat so they blend in.", "Ignore them and continue."], c: 0 },
+            { q: "A chemical splashes onto your hand. First critical action?", a: ["Immediately rinse the area with copious water for at least 15 minutes, then notify supervisor.", "Wipe it off with a dry cloth.", "Apply a neutralizer from the first aid kit immediately.", "Wait to see if there is irritation."], c: 0 },
+            { q: "A student is eating a snack while waiting for an experiment. What should be done?", a: ["Remind them that eating and drinking are prohibited inside the laboratory.", "It's okay if they are far from chemicals.", "Tell them to clean up crumbs.", "Ask for a bite."], c: 0 },
+            { q: "Work past 5:00 PM requires what?", a: ["Form 4: Off-Hours Permit approved by the chair, and an escort.", "A text message to the instructor.", "Nothing, as long as accompanied.", "Just sign the logbook."], c: 0 },
+            { q: "A small fire starts in a beaker. What should you do?", a: ["Cover it with a watch glass or non-flammable object to smother it.", "Throw water on it.", "Scream and run.", "Use a CO2 extinguisher immediately."], c: 0 },
+            { q: "Under the 'Never Return' rule, what happens to unused chemicals poured from a supply bottle?", a: ["They must be shared with a peer or disposed of as waste.", "They are poured back to save money.", "They are dumped in the sink.", "They are stored in the fume hood indefinitely."], c: 0 }
+        ];
+
+        var simState = { phase: 1, fhSwitchOn: false, fhSashDown: false, sortedItems: 0 };
+        var activeDragObj = null, dragOffset = { x: 0, y: 0 };
+
+        function refreshIcons() {
+            if (typeof lucide !== 'undefined' && lucide.createIcons) {
+                lucide.createIcons();
+            }
+        }
+
+        function navTo(screenId) {
+            document.querySelectorAll('.onboarding-screen').forEach(function(s) {
+                s.classList.add('hidden');
+            });
+            var target = document.getElementById(screenId);
+            if (target) target.classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (screenId === 'screen-quiz') startQuiz();
+            if (screenId === 'screen-cert') {
+                document.getElementById('cert-date').innerText = new Date().toLocaleDateString();
+            }
+        }
+
+        function startInduction() {
+            state.group = document.getElementById('user-group').value;
+            var progUi = document.getElementById('progress-ui');
+            if (progUi) {
+                progUi.classList.remove('hidden');
+                progUi.classList.add('flex');
+            }
+            updateProgress(10);
+            navTo('screen-ppe');
+        }
+
+        function skipToCertificate() {
+            state.group = document.getElementById('user-group').value;
+            state.score = 50; 
+            var progUi = document.getElementById('progress-ui');
+            if (progUi) {
+                progUi.classList.remove('hidden');
+                progUi.classList.add('flex');
+            }
+            updateProgress(100);
+            navTo('screen-cert');
+        }
+
+        function updateProgress(val) {
+            var bar = document.getElementById('app-progress');
+            var pct = document.getElementById('progress-pct');
+            if (bar) bar.style.width = val + '%';
+            if (pct) pct.innerText = val + '%';
+        }
+
+        function initPPE() {
+            var list = document.getElementById('ppe-list');
+            if (!list) return;
+            list.innerHTML = '';
+            state.ppeViewed = new Set();
+            
+            PPE_DATA.forEach(function(item) {
+                var btn = document.createElement('button');
+                btn.type = "button";
+                btn.className = "w-full text-left p-3.5 rounded-xl border border-slate-200 hover:border-up-maroon/50 transition-all text-xs font-semibold flex items-center justify-between bg-slate-50/70 hover:bg-white text-slate-800";
+                btn.innerHTML = '<span class="flex items-center gap-2.5"><i data-lucide="' + item.icon + '" class="w-4 h-4 text-up-maroon"></i> ' + item.title + '</span><i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>';
+                btn.onclick = function() {
+                    document.getElementById('ppe-title').innerText = item.title;
+                    document.getElementById('ppe-desc').innerText = item.desc;
+                    document.getElementById('ppe-icon-box').innerHTML = '<i data-lucide="' + item.icon + '" class="w-7 h-7"></i>';
+                    state.ppeViewed.add(item.id);
+                    btn.classList.add('step-active');
+
+                    var counter = document.getElementById('ppe-counter');
+                    if (counter) counter.innerText = state.ppeViewed.size + ' / ' + PPE_DATA.length + ' Reviewed';
+                    refreshIcons();
+                    
+                    if (state.ppeViewed.size === PPE_DATA.length) {
+                        var nxt = document.getElementById('btn-next-ppe');
+                        nxt.disabled = false;
+                        nxt.innerHTML = '<span>Continue to Module 2</span><i data-lucide="arrow-right" class="w-4 h-4"></i>';
+                        nxt.className = "bg-up-maroon hover:bg-up-maroonDark text-white px-7 py-3.5 rounded-xl font-display font-bold text-sm transition-all shadow-sm flex items-center gap-2";
+                        refreshIcons();
+                    }
+                };
+                list.appendChild(btn);
+            });
+            refreshIcons();
+        }
+
+        function initGHS() {
+            var grid = document.getElementById('ghs-grid');
+            if (!grid) return;
+            grid.innerHTML = '';
+            state.ghsViewed = new Set();
+
+            GHS_DATA.forEach(function(item) {
+                var btn = document.createElement('button');
+                btn.type = "button";
+                btn.className = "flex flex-col items-center justify-center p-3 rounded-xl border border-slate-200 hover:border-up-maroon/60 hover:bg-red-50/40 transition-all bg-white group h-full";
+                
+                var svgDiamond = '<svg viewBox="0 0 100 100" class="w-14 h-14 transition-transform group-hover:scale-105 mb-2 shrink-0">' +
+                                 '<polygon points="50,5 95,50 50,95 5,50" fill="white" stroke="#dc2626" stroke-width="8" stroke-linejoin="round"/>' +
+                                 item.svg +
+                                 '</svg>';
+
+                btn.innerHTML = svgDiamond + '<span class="text-[11px] font-semibold text-slate-700 text-center leading-tight">' + item.name + '</span>';
+                
+                btn.onclick = function() {
+                    document.getElementById('ghs-title').innerHTML = item.name.replace(/<br>.*/, ''); 
+                    document.getElementById('ghs-desc').innerHTML = item.desc;
+                    document.getElementById('ghs-icon-display').innerHTML = svgDiamond;
+                    
+                    state.ghsViewed.add(item.id);
+                    btn.classList.add('step-active');
+
+                    var counter = document.getElementById('ghs-counter');
+                    if (counter) counter.innerText = state.ghsViewed.size + ' / ' + GHS_DATA.length + ' Reviewed';
+                    
+                    if (state.ghsViewed.size === GHS_DATA.length) {
+                        var nxt = document.getElementById('btn-next-ghs');
+                        nxt.disabled = false;
+                        nxt.innerHTML = '<span>Continue to Module 4</span><i data-lucide="arrow-right" class="w-4 h-4"></i>';
+                        nxt.className = "bg-up-maroon hover:bg-up-maroonDark text-white px-7 py-3.5 rounded-xl font-display font-bold text-sm transition-all shadow-sm flex items-center gap-2";
+                        refreshIcons();
+                    }
+                };
+                grid.appendChild(btn);
+            });
+        }
+
+        function selectNFPA(color) {
+            var detail = NFPA_DATA[color];
+            if (!detail) return;
+
+            document.getElementById('nfpa-title').innerHTML = detail.title;
+            document.getElementById('nfpa-desc').innerHTML = detail.desc;
+            
+            var iconBox = document.getElementById('nfpa-icon');
+            iconBox.innerHTML = ''; 
+            iconBox.className = 'mb-4'; 
+
+            if (color === 'red') iconBox.classList.add('text-red-500');
+            else if (color === 'blue') iconBox.classList.add('text-blue-500');
+            else if (color === 'yellow') iconBox.classList.add('text-yellow-500');
+            else iconBox.classList.add('text-slate-300');
+
+            iconBox.innerHTML = '<i data-lucide="info" class="w-10 h-10"></i>';
+            refreshIcons();
+
+            state.nfpaViewed.add(color);
+            var counter = document.getElementById('nfpa-counter');
+            if (counter) counter.innerText = state.nfpaViewed.size + ' / 4 Quadrants';
+
+            if (state.nfpaViewed.size === 4) {
+                var nxt = document.getElementById('btn-next-nfpa');
+                nxt.disabled = false;
+                nxt.innerHTML = '<span>Continue to Module 5</span><i data-lucide="arrow-right" class="w-4 h-4"></i>';
+                nxt.className = "bg-up-maroon hover:bg-up-maroonDark text-white px-7 py-3.5 rounded-xl font-display font-bold text-sm transition-all shadow-sm flex items-center gap-2";
+                refreshIcons();
+            }
+        }
+
+        function showWaste(title, desc, color) {
+            var hygieneDetail = document.getElementById('hygiene-detail');
+            var placeholder = document.getElementById('hygiene-placeholder');
+            var colorClasses = {
+                blue: "bg-blue-950 border-blue-800",
+                purple: "bg-purple-950 border-purple-800",
+                amber: "bg-amber-950 border-amber-800",
+                red: "bg-red-950 border-red-800"
+            };
+            hygieneDetail.className = "rounded-2xl p-8 text-white border min-h-[230px] flex flex-col justify-between transition-colors duration-300 " + (colorClasses[color] || "bg-slate-900 border-slate-800");
+            placeholder.innerHTML = '<span class="text-[11px] font-bold uppercase tracking-wider text-white/70 block mb-1">Segregated Waste Stream</span><h3 class="font-display text-2xl font-bold mb-2">' + title + '</h3><p class="text-sm leading-relaxed text-slate-200">' + desc + '</p><div class="mt-6 p-3.5 bg-white/10 rounded-xl border border-white/15"><p class="text-[10px] font-bold uppercase tracking-widest text-white/80">Disposal Protocol</p><p class="text-xs mt-0.5 text-slate-200">Verify carboy label for owner, concentration, and date before pouring (Sec 3.3.1).</p></div>';
+            updateProgress(35);
+        }
+
+        function showFormDetail(title, desc) {
+            var info = document.getElementById('form-info');
+            info.classList.remove('hidden');
+            info.innerHTML = '<span class="font-bold text-red-300 block mb-1">' + title + '</span>' + desc;
+            updateProgress(80);
+        }
+
+        function downloadPDF() {
+            var btn = document.getElementById('btn-download');
+            var originalText = btn.innerHTML;
+            btn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Saving & Downloading...';
+            btn.disabled = true;
+            refreshIcons();
+
+            var element = document.getElementById('cert-to-print');
+            
+            var nameInput = document.getElementById('final-name');
+            var nameVal = nameInput.value.trim() || "JUAN DELA CRUZ";
+            
+            var nameSpan = document.createElement('div');
+            nameSpan.className = "text-3xl md:text-4xl font-bold pb-2 uppercase text-slate-900 border-transparent text-center w-full"; 
+            nameSpan.innerText = nameVal;
+            nameSpan.id = 'temp-name-span';
+            
+            nameInput.parentNode.insertBefore(nameSpan, nameInput);
+            nameInput.style.display = 'none';
+
+            var originalWidth = element.style.width;
+            var originalHeight = element.style.height;
+            var originalMaxW = element.style.maxWidth;
+            var originalDisplay = element.style.display;
+            var originalFlexDir = element.style.flexDirection;
+            var originalJustify = element.style.justifyContent;
+            
+            element.classList.remove('shadow-xl', 'max-w-4xl');
+            element.style.width = '1056px'; 
+            element.style.height = '816px';
+            element.style.maxWidth = 'none';
+            element.style.display = 'flex';
+            element.style.flexDirection = 'column';
+            element.style.justifyContent = 'center';
+
+            var currentScroll = window.scrollY || document.documentElement.scrollTop;
+            window.scrollTo(0, 0);
+
+            var opt = {
+                margin:       0,
+                filename:     nameVal.replace(/\s+/g, '_') + '_MatE_LabSafe.pdf',
+                image:        { type: 'jpeg', quality: 1 },
+                html2canvas:  { scale: 2, useCORS: true, scrollY: 0, scrollX: 0 },
+                jsPDF:        { unit: 'in', format: 'letter', orientation: 'landscape' }
+            };
+
+            var worker = html2pdf().set(opt).from(element);
+
+            worker.outputPdf('datauristring').then(function(pdfBase64) {
+                var payload = {
+                    name: nameVal,
+                    date: document.getElementById('cert-date').innerText,
+                    group: state.group,
+                    score: state.score,
+                    pdfData: pdfBase64
+                };
+
+                if (GAS_WEB_APP_URL && GAS_WEB_APP_URL !== "PASTE_YOUR_WEB_APP_URL_HERE") {
+                    fetch(GAS_WEB_APP_URL, {
+                        method: 'POST',
+                        body: JSON.stringify(payload),
+                        headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+                    })
+                    .then(function(response) { return response.json(); })
+                    .then(function(data) { console.log("Database response:", data); })
+                    .catch(function(error) { console.error("Database sync error:", error); });
+                }
+            }).then(function() {
+                return worker.save();
+            }).then(function() {
+                nameSpan.parentNode.removeChild(nameSpan);
+                nameInput.style.display = 'block';
+                
+                element.classList.add('shadow-xl', 'max-w-4xl');
+                element.style.width = originalWidth;
+                element.style.height = originalHeight;
+                element.style.maxWidth = originalMaxW;
+                element.style.display = originalDisplay;
+                element.style.flexDirection = originalFlexDir;
+                element.style.justifyContent = originalJustify;
+                
+                window.scrollTo(0, currentScroll); 
+                
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                refreshIcons();
+                showToast("Certificate downloaded successfully!", "check");
+            }).catch(function(err) {
+                console.error("PDF generation failed", err);
+                
+                if (nameSpan.parentNode) nameSpan.parentNode.removeChild(nameSpan);
+                nameInput.style.display = 'block';
+                
+                element.classList.add('shadow-xl', 'max-w-4xl');
+                element.style.width = originalWidth;
+                element.style.height = originalHeight;
+                element.style.maxWidth = originalMaxW;
+                element.style.display = originalDisplay;
+                element.style.flexDirection = originalFlexDir;
+                element.style.justifyContent = originalJustify;
+                
+                window.scrollTo(0, currentScroll);
+                
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                showToast("Failed to generate PDF.", "alert");
+                refreshIcons();
+            });
+        }
+
+        function initSimulation() {
+            simState.phase = 1;
+            simState.fhSwitchOn = false;
+            simState.fhSashDown = false;
+            simState.sortedItems = 0;
+            document.getElementById('obj-logbook').classList.add('pulse-highlight');
+            document.getElementById('fh-switch').classList.remove('pulse-highlight');
+            document.getElementById('fh-sash').classList.remove('pulse-highlight', 'draggable');
+            document.getElementById('items-layer').setAttribute('opacity', '0');
+            ['zone-solid', 'zone-chem', 'zone-sink'].forEach(function(id) {
+                document.getElementById(id).setAttribute('opacity', '0.4');
+            });
+            resetTransform('fh-sash');
+            resetTransform('drag-tissue');
+            resetTransform('drag-beaker');
+            resetTransform('drag-flask');
+            ['drag-tissue', 'drag-beaker', 'drag-flask'].forEach(function(id) {
+                var el = document.getElementById(id);
+                el.setAttribute('opacity', '1');
+                el.classList.add('draggable');
+            });
+        }
+
+        function simInteract(target) {
+            if (simState.phase === 1 && target === 'logbook') {
+                document.getElementById('sim-modal-logbook').classList.remove('hidden');
+                document.getElementById('modal-box').classList.replace('scale-95', 'scale-100');
+            }
+            if (simState.phase === 2 && target === 'switch' && !simState.fhSwitchOn) {
+                simState.fhSwitchOn = true;
+                document.getElementById('fh-switch').setAttribute('fill', '#22c55e');
+                document.getElementById('fh-fan').setAttribute('opacity', '1');
+                document.getElementById('fh-switch').classList.remove('pulse-highlight');
+                showToast("Fume Hood Fan ON", "check");
+                var sash = document.getElementById('fh-sash');
+                sash.classList.add('pulse-highlight', 'draggable');
+                document.getElementById('sim-prompt').innerHTML = "<strong>Task 2b:</strong> Drag the glass sash down to the red safety line.";
+            }
+        }
+
+        function simSignLogbook() {
+            document.getElementById('sim-modal-logbook').classList.add('hidden');
+            document.getElementById('obj-logbook').classList.remove('pulse-highlight', 'hazard-zone');
+            var t1 = document.getElementById('task1-ui');
+            t1.classList.add('text-emerald-600');
+            t1.innerHTML = '<i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5"></i><p>1. Sign the Room Logbook (Sec 2.1)</p>';
+            
+            showToast("Logbook Signed (Sec 2.1.3)", "check");
+            simState.phase = 2;
+            var t2 = document.getElementById('task2-ui');
+            t2.classList.replace('text-slate-400', 'text-slate-900');
+            t2.classList.add('font-bold');
+            t2.innerHTML = '<i data-lucide="circle-dashed" class="w-4 h-4 text-blue-500 shrink-0 mt-0.5"></i><p>2. Setup Fume Hood: Turn on Fan &amp; Pull Sash Down</p>';
+
+            document.getElementById('fh-switch').classList.add('pulse-highlight', 'cursor-pointer');
+            document.getElementById('sim-prompt').innerHTML = "<strong>Task 2a:</strong> Turn on the Fume Hood by clicking the red FAN switch.";
+            refreshIcons();
+        }
+
+        function getMousePosition(evt) {
+            var svgCanvas = document.getElementById('sim-svg');
+            var CTM = svgCanvas.getScreenCTM();
+            var e = evt.touches ? evt.touches[0] : evt;
+            return { x: (e.clientX - CTM.e) / CTM.a, y: (e.clientY - CTM.f) / CTM.d };
+        }
+
+        function getTransformTranslate(obj) {
+            var svgCanvas = document.getElementById('sim-svg');
+            var transforms = obj.transform.baseVal;
+            if (transforms.numberOfItems === 0 || transforms.getItem(0).type !== SVGTransform.SVG_TRANSFORM_TRANSLATE) {
+                var translate = svgCanvas.createSVGTransform();
+                translate.setTranslate(0, 0);
+                obj.transform.baseVal.insertItemBefore(translate, 0);
+            }
+            return obj.transform.baseVal.getItem(0);
+        }
+
+        function resetTransform(objId) {
+            var obj = document.getElementById(objId);
+            if (obj) getTransformTranslate(obj).setTranslate(0, 0);
+        }
+
+        function handleDragStart(evt) {
+            var target = evt.target.closest('.draggable');
+            if (!target) return;
+            if (target.id === 'fh-sash' && (simState.phase !== 2 || !simState.fhSwitchOn || simState.fhSashDown)) return;
+            if (target.closest('#items-layer') && simState.phase !== 3) return;
+
+            activeDragObj = target;
+            var coord = getMousePosition(evt);
+            var translate = getTransformTranslate(activeDragObj);
+            dragOffset.x = coord.x - translate.matrix.e;
+            dragOffset.y = coord.y - translate.matrix.f;
+            if (simState.phase === 3) activeDragObj.parentNode.appendChild(activeDragObj); 
+        }
+
+        function handleDragMove(evt) {
+            if (!activeDragObj) return;
+            evt.preventDefault();
+            var coord = getMousePosition(evt);
+            var tx = coord.x - dragOffset.x;
+            var ty = coord.y - dragOffset.y;
+            if (activeDragObj.id === 'fh-sash') {
+                tx = 0;
+                if (ty < 0) ty = 0;
+                if (ty > 80) ty = 80;
+            }
+            getTransformTranslate(activeDragObj).setTranslate(tx, ty);
+        }
+
+        function handleDragEnd(evt) {
+            if (!activeDragObj) return;
+
+            if (activeDragObj.id === 'fh-sash') {
+                var ty = getTransformTranslate(activeDragObj).matrix.f;
+                if (ty >= 75) {
+                    simState.fhSashDown = true;
+                    activeDragObj.classList.remove('pulse-highlight', 'draggable');
+                    showToast("Sash positioned safely (Sec 3.3.2)", "check");
+
+                    var t2 = document.getElementById('task2-ui');
+                    t2.classList.add('text-emerald-600');
+                    t2.innerHTML = '<i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5"></i><p>2. Setup Fume Hood: Turn on Fan &amp; Pull Sash Down</p>';
+                    
+                    simState.phase = 3;
+                    var t3 = document.getElementById('task3-ui');
+                    t3.classList.replace('text-slate-400', 'text-slate-900');
+                    t3.classList.add('font-bold');
+                    t3.innerHTML = '<i data-lucide="circle-dashed" class="w-4 h-4 text-blue-500 shrink-0 mt-0.5"></i><p>3. Cleanup: Sort Tissue, Chemical Beaker, and Dirty Flask</p>';
+                    
+                    document.getElementById('items-layer').setAttribute('opacity', '1');
+                    ['zone-solid', 'zone-chem', 'zone-sink'].forEach(function(id) {
+                        document.getElementById(id).setAttribute('opacity', '1');
+                    });
+                    document.getElementById('sim-prompt').innerHTML = "<strong>Task 3:</strong> Clean up the bench. Drag the Tissue, Chemical Beaker, and Dirty Flask to their correct disposal areas.";
+                    refreshIcons();
+                } else {
+                    resetTransform('fh-sash');
+                    showToast("Pull the sash all the way to the red safety line.", "alert");
+                }
+            } else if (simState.phase === 3) {
+                var targetId = activeDragObj.getAttribute('data-target');
+                var targetZone = document.getElementById(targetId);
+                var itemRect = activeDragObj.getBoundingClientRect();
+                var zoneRect = targetZone.getBoundingClientRect();
+                var overlap = !(itemRect.right < zoneRect.left || itemRect.left > zoneRect.right || itemRect.bottom < zoneRect.top || itemRect.top > zoneRect.bottom);
+
+                if (overlap) {
+                    activeDragObj.setAttribute('opacity', '0');
+                    activeDragObj.classList.remove('draggable');
+                    showToast("Correct disposal.", "check");
+                    simState.sortedItems++;
+
+                    if (simState.sortedItems === 3) {
+                        var t3Done = document.getElementById('task3-ui');
+                        t3Done.classList.add('text-emerald-600');
+                        t3Done.innerHTML = '<i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5"></i><p>3. Cleanup: Sort Tissue, Chemical Beaker, and Dirty Flask</p>';
+                        document.getElementById('sim-prompt').innerHTML = "<strong>Module Complete:</strong> You have cleared the laboratory space properly.";
+                        
+                        var btn = document.getElementById('btn-next-sim');
+                        btn.disabled = false;
+                        btn.innerText = "Take Final Safety Exam";
+                        btn.className = "w-full bg-up-maroon text-white py-3.5 rounded-xl font-display font-bold text-xs hover:bg-up-maroonDark transition-all shadow-sm";
+                        updateProgress(90);
+                        refreshIcons();
+                    }
+                } else {
+                    resetTransform(activeDragObj.id);
+                    showToast("Incorrect disposal location. Try again.", "alert");
+                }
+            }
+            activeDragObj = null;
+        }
+
+        // --- QUIZ LOGIC ---
+
+        function startQuiz() {
+            state.quizIndex = 0;
+            state.score = 0;
+            
+            state.activeQuizData = JSON.parse(JSON.stringify(RAW_QUIZ_DATA));
+            
+            for (var i = state.activeQuizData.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = state.activeQuizData[i];
+                state.activeQuizData[i] = state.activeQuizData[j];
+                state.activeQuizData[j] = temp;
+            }
+
+            state.activeQuizData.forEach(function(q) {
+                var answers = q.a.map(function(text, idx) { return { text: text, isCorrect: idx === q.c }; });
+                for (var k = answers.length - 1; k > 0; k--) {
+                    var l = Math.floor(Math.random() * (k + 1));
+                    var tmp = answers[k];
+                    answers[k] = answers[l];
+                    answers[l] = tmp;
+                }
+                q.a = answers.map(function(a) { return a.text; });
+                q.c = answers.findIndex(function(a) { return a.isCorrect; });
+            });
+
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            var q = state.activeQuizData[state.quizIndex];
+            var totalQ = state.activeQuizData.length;
+            
+            document.getElementById('quiz-counter').innerText = "Question " + (state.quizIndex + 1) + " of " + totalQ;
+            document.getElementById('quiz-progress-bar').style.width = (((state.quizIndex + 1) / totalQ) * 100) + '%';
+            
+            document.getElementById('q-text').innerText = q.q;
+            
+            var container = document.getElementById('q-options');
+            container.innerHTML = '';
+            
+            q.a.forEach(function(opt, i) {
+                var b = document.createElement('button');
+                b.type = "button";
+                b.className = "w-full text-left p-4 rounded-xl border border-slate-200 hover:border-up-maroon hover:bg-red-50/40 font-medium text-slate-700 transition-all text-sm";
+                b.innerText = opt;
+                b.onclick = function() {
+                    if (i === q.c) state.score++;
+                    state.quizIndex++;
+                    if (state.quizIndex < totalQ) {
+                        renderQuestion();
+                    } else {
+                        finishQuiz();
+                    }
+                };
+                container.appendChild(b);
+            });
+        }
+
+        function finishQuiz() {
+            document.getElementById('quiz-area').classList.add('hidden');
+            var summary = document.getElementById('quiz-summary');
+            summary.classList.remove('hidden');
+            
+            var totalQ = state.activeQuizData.length;
+            var reqScore = Math.ceil(totalQ * 0.8);
+            var pass = state.score >= reqScore;
+            
+            var icon = document.getElementById('quiz-icon');
+            var title = document.getElementById('quiz-result-title');
+            var msg = document.getElementById('quiz-result-msg');
+            var btn = document.getElementById('quiz-cta');
+
+            if (pass) {
+                updateProgress(100);
+                icon.innerHTML = '<div class="bg-emerald-50 border border-emerald-200 p-6 rounded-2xl text-emerald-600"><i data-lucide="award" class="w-14 h-14"></i></div>';
+                title.innerText = "Assessment Passed!";
+                msg.innerHTML = "You scored <strong>" + state.score + " / " + totalQ + "</strong>. You have demonstrated mastery of the safety protocols required for MatE Lab Entry.";
+                btn.innerText = "Issue Safety Certificate";
+                btn.onclick = function() { navTo('screen-cert'); };
+            } else {
+                icon.innerHTML = '<div class="bg-rose-50 border border-rose-200 p-6 rounded-2xl text-rose-600"><i data-lucide="shield-alert" class="w-14 h-14"></i></div>';
+                title.innerText = "Assessment Not Passed";
+                msg.innerHTML = "You scored <strong>" + state.score + " / " + totalQ + "</strong>. A minimum score of 80% (" + reqScore + " correct) is required to become an authorized laboratory user.";
+                btn.innerText = "Retake Assessment";
+                btn.onclick = function() {
+                    summary.classList.add('hidden');
+                    document.getElementById('quiz-area').classList.remove('hidden');
+                    startQuiz();
+                };
+            }
+            refreshIcons();
+        }
+
+        function showToast(msg, type) {
+            var t = document.getElementById('toast');
+            var ti = document.getElementById('toast-icon');
+            document.getElementById('toast-msg').innerText = msg;
+            ti.innerHTML = type === 'check'
+                ? '<i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>'
+                : '<i data-lucide="alert-circle" class="w-4 h-4 text-amber-400"></i>';
+            t.classList.remove('translate-y-32', 'opacity-0');
+            refreshIcons();
+            setTimeout(function() {
+                t.classList.add('translate-y-32', 'opacity-0');
+            }, 3000);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            if (ENABLE_DEV_MODE) {
+                var devBtn = document.getElementById('dev-skip-btn');
+                if (devBtn) devBtn.classList.remove('hidden');
+            }
+
+            var mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            var mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+
+            refreshIcons();
+            initPPE();
+            initGHS();
+        });
+    </script>
+</body>
+</html>
